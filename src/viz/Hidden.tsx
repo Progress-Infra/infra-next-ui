@@ -1,0 +1,16 @@
+import * as React from "react";
+import { Hidden as MHidden, HiddenProps as MHiddenProps } from "@mui/material";
+
+export interface HiddenProps extends MHiddenProps { }
+
+function Hidden({ children, ...others }: HiddenProps): JSX.Element {
+    return (
+        <MHidden
+            {...others}
+        >
+            {children}
+        </MHidden>
+    )
+}
+
+export default Hidden;
