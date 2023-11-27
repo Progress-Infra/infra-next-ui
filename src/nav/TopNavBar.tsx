@@ -2,6 +2,7 @@ import { AppBar, Button, IconButton, Link, Menu, MenuItem, MenuList, Stack, Typo
 import * as React from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Icon } from "../viz";
+import UserPreferenceEditor from "../editors/UserPreferenceEditor";
 
 export interface NavLinkProps {
     name: string,
@@ -17,6 +18,8 @@ export interface NavProps {
 export interface TopNavBarProps {
     appName: string,
     navs: NavProps[]
+    userDisplayName?: string,
+    username?: string
 };
 
 interface LogoProps {
@@ -67,12 +70,15 @@ function Logo({ appName }: LogoProps) {
     )
 }
 
-function TopNavBar({ appName, navs }: TopNavBarProps) {
+function TopNavBar({ appName, navs, userDisplayName, username }: TopNavBarProps) {
     const
         loc = useLocation(),
         nav = useNavigate(),
         [activeNav, setActiveNav] = React.useState<string | null>(null),
-        [anchors, setAnchors] = React.useState<{ [name: string]: HTMLElement | null }>({});
+        [anchors, setAnchors] = React.useState<{ [name: string]: HTMLElement | null }>({}),
+        handleClickPrefs = (e: React.MouseEvent<HTMLButtonElement>) => {
+            setAnchors({ ...anchors, ...{ prefs: e.currentTarget } });
+        };
 
     React.useEffect(() => {
         const isActive = (nav: NavProps) => (
@@ -173,7 +179,9 @@ function TopNavBar({ appName, navs }: TopNavBarProps) {
                 <div
                     style={{ flex: "auto" }}
                 />
-                <IconButton>
+                <IconButton
+                    onClick={handleClickPrefs}
+                >
                     <Icon
                         iconKey="settings"
                     />
@@ -249,12 +257,24 @@ function TopNavBar({ appName, navs }: TopNavBarProps) {
                 <div
                     style={{ flex: "auto" }}
                 />
-                <IconButton>
+                <IconButton
+                    onClick={handleClickPrefs}
+                >
                     <Icon
                         iconKey="settings"
                     />
                 </IconButton>
             </Stack>
+
+            <UserPreferenceEditor
+                anchorEl={anchors.prefs}
+                open={!!anchors.prefs}
+                userDisplayName={userDisplayName}
+                username={username}
+                onClose={() => {
+                    setAnchors({ ...anchors, ...{ prefs: null } });
+                }}
+            />
         </AppBar>
     )
 }

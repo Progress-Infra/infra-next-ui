@@ -3,13 +3,28 @@ import { ThemeProvider as MThemeProvider, createTheme } from "@mui/material/styl
 import { CssBaseline, useMediaQuery } from "@mui/material";
 import { brandColor } from "./ThemeConstants";
 
+export const ThemeModeContext = React.createContext({ setThemeMode: (mode: "dark" | "light") => { } });
+
 export interface ThemeProviderProps {
     children: React.ReactNode
 }
 
 function ThemeProvider({ children }: ThemeProviderProps): JSX.Element {
     const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)'),
-        defaultTheme = localStorage.getItem("nui.theme") === "dark" || prefersDarkMode ? "dark" : "light",
+        defaultMode = localStorage.getItem("nui.theme") === "light" ?
+            "light" :
+            localStorage.getItem("nui.theme") === "dark" ?
+                "dark" :
+                prefersDarkMode ?
+                    "dark" :
+                    "light",
+        [mode, setMode] = React.useState<"dark" | "light">(defaultMode),
+        themeMode = React.useMemo(() => ({
+            setThemeMode: (mode: "light" | "dark") => {
+                setMode(mode);
+                localStorage.setItem("nui.theme", mode);
+            }
+        }), []),
         theme = React.useMemo(
             () =>
                 createTheme({
@@ -23,9 +38,9 @@ function ThemeProvider({ children }: ThemeProviderProps): JSX.Element {
                         }
                     },
                     palette: {
-                        mode: defaultTheme,
+                        mode: mode,
                         ...(
-                            defaultTheme === "dark" ?
+                            mode === "dark" ?
                                 {
                                     primary: {
                                         main: brandColor[50]
@@ -39,18 +54,22 @@ function ThemeProvider({ children }: ThemeProviderProps): JSX.Element {
                         )
                     }
                 }),
-            [defaultTheme]
+            [mode]
         );
 
     return (
-        <MThemeProvider
-            theme={theme}
+        <ThemeModeContext.Provider
+            value={themeMode}
         >
-            <CssBaseline />
-            <>
-                {children}
-            </>
-        </MThemeProvider>
+            <MThemeProvider
+                theme={theme}
+            >
+                <CssBaseline />
+                <>
+                    {children}
+                </>
+            </MThemeProvider>
+        </ThemeModeContext.Provider>
     )
 }
 
