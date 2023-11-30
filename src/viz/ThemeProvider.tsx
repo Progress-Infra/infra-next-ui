@@ -52,6 +52,9 @@ function ThemeProvider({ children }: ThemeProviderProps): JSX.Element {
                                     }
                                 }
                         )
+                    },
+                    typography: {
+                        fontFamily: "Source Sans Pro"
                     }
                 }),
             [mode]

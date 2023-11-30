@@ -118,9 +118,10 @@ function TopNavBar({ appName, navs, userDisplayName, username }: TopNavBarProps)
                 />
                 {
                     navs.map(n => (
-                        <>
+                        <div
+                            key={n.name}
+                        >
                             <Button
-                                key={n.name}
                                 onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                                     if (n.path) {
                                         nav(n.path);
@@ -173,7 +174,7 @@ function TopNavBar({ appName, navs, userDisplayName, username }: TopNavBarProps)
                                     }
                                 </Menu>
                             }
-                        </>
+                        </div>
                     ))
                 }
                 <div

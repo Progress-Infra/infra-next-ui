@@ -40,7 +40,7 @@ i18n
     .use(initReactI18next)
     .init({
         debug: process.env.NODE_ENV === "development",
-        defaultNS: "common",
+        defaultNS: "nui",
         fallbackLng: "en",
         ns: "common",
         interpolation: {
