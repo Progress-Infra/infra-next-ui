@@ -1,4 +1,4 @@
-import { Avatar, Button, ButtonGroup, Card, CardContent, CardHeader, IconButton, MenuItem, Popover, PopoverProps, Stack, TextField, useTheme } from "@mui/material";
+import { Avatar, Box, Button, ButtonGroup, Card, CardContent, CardHeader, IconButton, MenuItem, Popover, PopoverProps, Stack, TextField, useTheme } from "@mui/material";
 import { Close, DarkMode, LightMode, Logout } from "@mui/icons-material";
 import * as React from "react";
 import { ThemeModeContext } from "../viz/ThemeProvider";
@@ -42,28 +42,32 @@ function UserPreferenceEditor({ onClose, userDisplayName, username, ...others }:
                     <Stack
                         spacing={4}
                     >
-                        <ButtonGroup
-                            variant="outlined"
+                        <Box
+                            sx={{ textAlign: "center", width: 1 }}
                         >
-                            <Button
-                                onClick={() => {
-                                    themeMode.setThemeMode("light");
-                                }}
-                                startIcon={<LightMode />}
-                                variant={theme.palette.mode === "light" ? "contained" : "outlined"}
+                            <ButtonGroup
+                                variant="outlined"
                             >
-                                {t("command.theme.lightMode")}
-                            </Button>
-                            <Button
-                                onClick={() => {
-                                    themeMode.setThemeMode("dark");
-                                }}
-                                startIcon={<DarkMode />}
-                                variant={theme.palette.mode === "dark" ? "contained" : "outlined"}
-                            >
-                                {t("command.theme.darkMode")}
-                            </Button>
-                        </ButtonGroup>
+                                <Button
+                                    onClick={() => {
+                                        themeMode.setThemeMode("light");
+                                    }}
+                                    startIcon={<LightMode />}
+                                    variant={theme.palette.mode === "light" ? "contained" : "outlined"}
+                                >
+                                    {t("command.theme.lightMode")}
+                                </Button>
+                                <Button
+                                    onClick={() => {
+                                        themeMode.setThemeMode("dark");
+                                    }}
+                                    startIcon={<DarkMode />}
+                                    variant={theme.palette.mode === "dark" ? "contained" : "outlined"}
+                                >
+                                    {t("command.theme.darkMode")}
+                                </Button>
+                            </ButtonGroup>
+                        </Box>
                         <TextField
                             fullWidth
                             label={t("label.language")}

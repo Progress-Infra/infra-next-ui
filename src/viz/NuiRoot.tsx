@@ -1,7 +1,6 @@
 import * as React from "react";
 import ThemeProvider from "./ThemeProvider";
-import "./i18n";
-import { CircularProgress } from "@mui/material";
+import I18nInit from "./I18nInit";
 
 export interface NuiRootProps {
     children?: React.ReactNode
@@ -9,13 +8,12 @@ export interface NuiRootProps {
 
 function NuiRoot({ children }: NuiRootProps) {
     return (
-        <React.Suspense
-            fallback={<CircularProgress />}
-        >
+        <>
+            <I18nInit />
             <ThemeProvider>
                 {children}
             </ThemeProvider>
-        </React.Suspense>
+        </>
     )
 }
 
