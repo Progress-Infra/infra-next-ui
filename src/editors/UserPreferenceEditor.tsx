@@ -1,9 +1,10 @@
-import { Avatar, Box, Button, ButtonGroup, Card, CardContent, CardHeader, IconButton, MenuItem, Popover, PopoverProps, Stack, TextField, useTheme } from "@mui/material";
-import { Close, DarkMode, LightMode, Logout } from "@mui/icons-material";
+import { Avatar, Box, ButtonGroup, Card, CardContent, CardHeader, IconButton, MenuItem, Popover, PopoverProps, Stack, TextField, useTheme } from "@mui/material";
 import * as React from "react";
 import { ThemeModeContext } from "../viz/ThemeProvider";
 import { languages } from "../viz/i18n";
 import { useTranslation } from "react-i18next";
+import { Icon } from "../viz";
+import { Button } from "../commands";
 
 export interface UserPreferenceEditorProps extends PopoverProps {
     userDisplayName?: string,
@@ -27,7 +28,9 @@ function UserPreferenceEditor({ onClose, userDisplayName, username, ...others }:
                             onClick={() => {
                                 onClose && onClose({}, "escapeKeyDown");
                             }}>
-                            <Close />
+                            <Icon
+                                faKey="x"
+                            />
                         </IconButton>
                     }
                     avatar={
@@ -52,8 +55,10 @@ function UserPreferenceEditor({ onClose, userDisplayName, username, ...others }:
                                     onClick={() => {
                                         themeMode.setThemeMode("light");
                                     }}
-                                    startIcon={<LightMode />}
-                                    variant={theme.palette.mode === "light" ? "contained" : "outlined"}
+                                    startIcon={<Icon
+                                        faKey="sun"
+                                    />}
+                                    variant={theme.palette.mode === "light" ? "primary" : "outline"}
                                 >
                                     {t("command.theme.lightMode")}
                                 </Button>
@@ -61,8 +66,10 @@ function UserPreferenceEditor({ onClose, userDisplayName, username, ...others }:
                                     onClick={() => {
                                         themeMode.setThemeMode("dark");
                                     }}
-                                    startIcon={<DarkMode />}
-                                    variant={theme.palette.mode === "dark" ? "contained" : "outlined"}
+                                    startIcon={<Icon
+                                        faKey="moon"
+                                    />}
+                                    variant={theme.palette.mode === "dark" ? "primary" : "outline"}
                                 >
                                     {t("command.theme.darkMode")}
                                 </Button>
@@ -90,7 +97,9 @@ function UserPreferenceEditor({ onClose, userDisplayName, username, ...others }:
                         </TextField>
                         <Button
                             href="/logout"
-                            startIcon={<Logout />}
+                            startIcon={<Icon
+                                faKey="right-from-bracket"
+                            />}
                         >
                             {t("command.signOut")}
                         </Button>

@@ -5,4 +5,5 @@ export * from "./dataViz";
 export * from "./forms";
 export * from "./layout";
 export * from "./nav";
+export * from "./page";
 export * from "./viz";

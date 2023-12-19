@@ -1,47 +1,20 @@
 import * as React from "react";
-import { SvgIconProps } from "@mui/material";
-import { Menu, KeyboardArrowDown, KeyboardArrowUp, Settings } from "@mui/icons-material";
+import { Icon as MIcon, IconProps as MIconProps } from "@mui/material";
 
-export type IconKeys = "hamburgerMenu" | "menuDown" | "menuUp" | "settings";
-
-export type IconProps = SvgIconProps & {
-    iconKey: IconKeys
+export type IconProps = MIconProps & {
+    faKey: string
 };
 
-function getIcon({ iconKey, children, ...others }: IconProps): JSX.Element {
-    switch (iconKey) {
-        case "hamburgerMenu":
-            return <Menu
-                {...others}
-            >
-                {children}
-            </Menu>
-        case "menuDown":
-            return <KeyboardArrowDown
-                {...others}
-            >
-                {children}
-            </KeyboardArrowDown>
-        case "menuUp":
-            return <KeyboardArrowUp
-                {...others}
-            >
-                {children}
-            </KeyboardArrowUp>
-        case "settings":
-            return <Settings
-                {...others}
-            >
-                {children}
-            </Settings>
-
-        default:
-            return <></>
-    }
-}
-
-function Icon(props: IconProps): JSX.Element {
-    return getIcon({ ...props });
+function Icon({ faKey, children, fontSize = "small", ...others }: IconProps): JSX.Element {
+    return (
+        <MIcon
+            {...others}
+            baseClassName={`fa fa-${faKey}`}
+            fontSize={fontSize}
+        >
+            {children}
+        </MIcon>
+    )
 }
 
 export default Icon;

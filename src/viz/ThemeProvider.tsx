@@ -44,11 +44,17 @@ function ThemeProvider({ children }: ThemeProviderProps): JSX.Element {
                                 {
                                     primary: {
                                         main: brandColor[50]
+                                    },
+                                    secondary: {
+                                        main: "#FFF"
                                     }
                                 } :
                                 {
                                     primary: {
                                         main: brandColor[100]
+                                    },
+                                    secondary: {
+                                        main: "#000"
                                     }
                                 }
                         )

@@ -144,7 +144,7 @@ function TopNavBar({ appName, navs, userDisplayName, username }: TopNavBarProps)
                                         variant="body1"
                                     >
                                         <Icon
-                                            iconKey="menuDown"
+                                            faKey="angle-down"
                                             sx={{ paddingLeft: "4px", paddingTop: "4px" }}
                                         />
                                     </Typography>
@@ -184,7 +184,7 @@ function TopNavBar({ appName, navs, userDisplayName, username }: TopNavBarProps)
                     onClick={handleClickPrefs}
                 >
                     <Icon
-                        iconKey="settings"
+                        faKey="gear"
                     />
                 </IconButton>
             </Stack>
@@ -209,7 +209,7 @@ function TopNavBar({ appName, navs, userDisplayName, username }: TopNavBarProps)
                     }}
                 >
                     <Icon
-                        iconKey="hamburgerMenu"
+                        faKey="bars"
                     />
                 </IconButton>
                 <Menu
@@ -262,7 +262,7 @@ function TopNavBar({ appName, navs, userDisplayName, username }: TopNavBarProps)
                     onClick={handleClickPrefs}
                 >
                     <Icon
-                        iconKey="settings"
+                        faKey="gear"
                     />
                 </IconButton>
             </Stack>
