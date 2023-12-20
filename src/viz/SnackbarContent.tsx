@@ -1,14 +1,13 @@
-import * as React from "react";
-import { SnackbarContent as MSnackbarContent, SnackbarContentProps as MSnackbarContentProps } from "@mui/material";
+import * as React from 'react';
+import {
+    SnackbarContent as MSnackbarContent,
+    SnackbarContentProps as MSnackbarContentProps
+} from '@mui/material';
 
-export interface SnackbarContentProps extends MSnackbarContentProps { }
+export type SnackbarContentProps = MSnackbarContentProps
 
 function SnackbarContent(props: SnackbarContentProps): JSX.Element {
-    return (
-        <MSnackbarContent
-            {...props}
-        />
-    )
+    return <MSnackbarContent {...props} />;
 }
 
 export default SnackbarContent;

@@ -1,14 +1,10 @@
-import * as React from "react";
-import { Switch as MSwitch, SwitchProps as MSwitchProps } from "@mui/material";
+import * as React from 'react';
+import { Switch as MSwitch, SwitchProps as MSwitchProps } from '@mui/material';
 
-export interface SwitchProps extends MSwitchProps { }
+export type SwitchProps = MSwitchProps
 
 function Switch(props: SwitchProps): JSX.Element {
-    return (
-        <MSwitch
-            {...props}
-        />
-    )
+    return <MSwitch {...props} />;
 }
 
 export default Switch;

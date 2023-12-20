@@ -1,14 +1,13 @@
-import * as React from "react";
-import { CircularProgress as MCircularProgress, CircularProgressProps as MCircularProgressProps } from "@mui/material";
+import * as React from 'react';
+import {
+    CircularProgress as MCircularProgress,
+    CircularProgressProps as MCircularProgressProps
+} from '@mui/material';
 
-export interface CircularProgressProps extends MCircularProgressProps { }
+export type CircularProgressProps = MCircularProgressProps
 
 function CircularProgress(props: CircularProgressProps): JSX.Element {
-    return (
-        <MCircularProgress
-            {...props}
-        />
-    )
+    return <MCircularProgress {...props} />;
 }
 
 export default CircularProgress;

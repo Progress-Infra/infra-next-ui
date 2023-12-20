@@ -1,16 +1,13 @@
-import * as React from "react";
-import { CardActions as MCardActions, CardActionsProps as MCardActionsProps } from "@mui/material";
+import * as React from 'react';
+import {
+    CardActions as MCardActions,
+    CardActionsProps as MCardActionsProps
+} from '@mui/material';
 
-export interface CardActionsProps extends MCardActionsProps { }
+export type CardActionsProps = MCardActionsProps
 
 function CardActions({ children, ...others }: CardActionsProps): JSX.Element {
-    return (
-        <MCardActions
-            {...others}
-        >
-            {children}
-        </MCardActions>
-    )
+    return <MCardActions {...others}>{children}</MCardActions>;
 }
 
 export default CardActions;

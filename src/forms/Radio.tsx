@@ -1,14 +1,10 @@
-import * as React from "react";
-import { Radio as MRadio, RadioProps as MRadioProps } from "@mui/material";
+import * as React from 'react';
+import { Radio as MRadio, RadioProps as MRadioProps } from '@mui/material';
 
-export interface RadioProps extends MRadioProps { }
+export type RadioProps = MRadioProps
 
 function Radio(props: RadioProps): JSX.Element {
-    return (
-        <MRadio
-            {...props}
-        />
-    )
+    return <MRadio {...props} />;
 }
 
 export default Radio;

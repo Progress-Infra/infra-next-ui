@@ -1,14 +1,13 @@
-import * as React from "react";
-import { OutlinedInput as MOutlinedInput, OutlinedInputProps as MOutlinedInputProps } from "@mui/material";
+import * as React from 'react';
+import {
+    OutlinedInput as MOutlinedInput,
+    OutlinedInputProps as MOutlinedInputProps
+} from '@mui/material';
 
-export interface OutlinedInputProps extends MOutlinedInputProps { }
+export type OutlinedInputProps = MOutlinedInputProps
 
 function OutlinedInput(props: OutlinedInputProps): JSX.Element {
-    return (
-        <MOutlinedInput
-            {...props}
-        />
-    )
+    return <MOutlinedInput {...props} />;
 }
 
 export default OutlinedInput;

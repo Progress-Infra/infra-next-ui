@@ -1,16 +1,13 @@
-import * as React from "react";
-import { SpeedDial as MSpeedDial, SpeedDialProps as MSpeedDialProps } from "@mui/material";
+import * as React from 'react';
+import {
+    SpeedDial as MSpeedDial,
+    SpeedDialProps as MSpeedDialProps
+} from '@mui/material';
 
-export interface SpeedDialProps extends MSpeedDialProps { }
+export type SpeedDialProps = MSpeedDialProps
 
 function SpeedDial({ children, ...others }: SpeedDialProps): JSX.Element {
-    return (
-        <MSpeedDial
-            {...others}
-        >
-            {children}
-        </MSpeedDial>
-    )
+    return <MSpeedDial {...others}>{children}</MSpeedDial>;
 }
 
 export default SpeedDial;
