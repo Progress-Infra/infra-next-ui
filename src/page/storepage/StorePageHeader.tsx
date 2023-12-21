@@ -227,7 +227,7 @@ function StorePageHeader({
                 setStatusResult(result);
             });
         }
-    }, [filterValue, setStatusResult, statusApi]);
+    }, [filterValue]);
 
     return (
         <Stack spacing={2}>
