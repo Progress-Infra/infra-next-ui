@@ -4,7 +4,7 @@ import {
     FormControlLabelProps as MFormControlLabelProps
 } from '@mui/material';
 
-export type FormControlLabelProps = MFormControlLabelProps
+export type FormControlLabelProps = MFormControlLabelProps;
 
 function FormControlLabel(props: FormControlLabelProps): JSX.Element {
     return <MFormControlLabel {...props} />;

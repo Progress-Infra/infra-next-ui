@@ -4,7 +4,7 @@ import {
     SpeedDialActionProps as MSpeedDialActionProps
 } from '@mui/material';
 
-export type SpeedDialActionProps = MSpeedDialActionProps
+export type SpeedDialActionProps = MSpeedDialActionProps;
 
 function SpeedDialAction(props: SpeedDialActionProps): JSX.Element {
     return <MSpeedDialAction {...props} />;

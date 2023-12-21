@@ -4,7 +4,7 @@ import {
     AlertTitleProps as MAlertTitleProps
 } from '@mui/material';
 
-export type AlertTitleProps = MAlertTitleProps
+export type AlertTitleProps = MAlertTitleProps;
 
 function AlertTitle({ children, ...others }: AlertTitleProps): JSX.Element {
     return <MAlertTitle {...others}>{children}</MAlertTitle>;

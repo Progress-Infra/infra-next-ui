@@ -4,7 +4,7 @@ import {
     RadioGroupProps as MRadioGroupProps
 } from '@mui/material';
 
-export type RadioGroupProps = MRadioGroupProps
+export type RadioGroupProps = MRadioGroupProps;
 
 function RadioGroup({ children, ...others }: RadioGroupProps): JSX.Element {
     return <MRadioGroup {...others}>{children}</MRadioGroup>;

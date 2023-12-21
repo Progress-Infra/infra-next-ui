@@ -4,7 +4,7 @@ import {
     ToggleButtonGroupProps as MToggleButtonGroupProps
 } from '@mui/material';
 
-export type ToggleButtonGroupProps = MToggleButtonGroupProps
+export type ToggleButtonGroupProps = MToggleButtonGroupProps;
 
 function ToggleButtonGroup({
     children,

@@ -4,7 +4,7 @@ import {
     ListItemSecondaryActionProps as MListItemSecondaryActionProps
 } from '@mui/material';
 
-export type ListItemSecondaryActionProps = MListItemSecondaryActionProps
+export type ListItemSecondaryActionProps = MListItemSecondaryActionProps;
 
 function ListItemSecondaryAction({
     children,

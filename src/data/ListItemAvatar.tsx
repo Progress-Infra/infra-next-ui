@@ -4,7 +4,7 @@ import {
     ListItemAvatarProps as MListItemAvatarProps
 } from '@mui/material';
 
-export type ListItemAvatarProps = MListItemAvatarProps
+export type ListItemAvatarProps = MListItemAvatarProps;
 
 function ListItemAvatar({
     children,

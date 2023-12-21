@@ -4,7 +4,8 @@ import {
     LocalizationProviderProps as MLocalizationProviderProps
 } from '@mui/x-date-pickers';
 
-export type LocalizationProviderProps<TDate, TLocale> = MLocalizationProviderProps<TDate, TLocale>
+export type LocalizationProviderProps<TDate, TLocale> =
+    MLocalizationProviderProps<TDate, TLocale>;
 
 function LocalizationProvider<TDate, TLocale>({
     children,

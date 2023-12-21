@@ -4,7 +4,8 @@ import {
     TreeViewProps as MTreeViewProps
 } from '@mui/x-tree-view';
 
-export type TreeViewProps<Multiple extends boolean | undefined> = MTreeViewProps<Multiple>
+export type TreeViewProps<Multiple extends boolean | undefined> =
+    MTreeViewProps<Multiple>;
 
 function TreeView<Multiple extends boolean | undefined>({
     children,

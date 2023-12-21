@@ -4,7 +4,7 @@ import {
     ListItemIconProps as MListItemIconProps
 } from '@mui/material';
 
-export type ListItemIconProps = MListItemIconProps
+export type ListItemIconProps = MListItemIconProps;
 
 function ListItemIcon({ children, ...others }: ListItemIconProps): JSX.Element {
     return <MListItemIcon {...others}>{children}</MListItemIcon>;

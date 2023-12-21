@@ -4,7 +4,7 @@ import {
     TabScrollButtonProps as MTabScrollButtonProps
 } from '@mui/material';
 
-export type TabScrollButtonProps = MTabScrollButtonProps
+export type TabScrollButtonProps = MTabScrollButtonProps;
 
 function TabScrollButton({
     children,

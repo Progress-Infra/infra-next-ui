@@ -4,7 +4,7 @@ import {
     CheckboxProps as MCheckboxProps
 } from '@mui/material';
 
-export type CheckboxProps = MCheckboxProps
+export type CheckboxProps = MCheckboxProps;
 
 function Checkbox(props: CheckboxProps): JSX.Element {
     return <MCheckbox {...props} />;

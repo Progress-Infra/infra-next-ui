@@ -4,7 +4,7 @@ import {
     SwipeableDrawerProps as MSwipeableDrawerProps
 } from '@mui/material';
 
-export type SwipeableDrawerProps = MSwipeableDrawerProps
+export type SwipeableDrawerProps = MSwipeableDrawerProps;
 
 function SwipeableDrawer({
     children,

@@ -4,7 +4,7 @@ import {
     TableCellProps as MTableCellProps
 } from '@mui/material';
 
-export type TableCellProps = MTableCellProps
+export type TableCellProps = MTableCellProps;
 
 function TableCell({ children, ...others }: TableCellProps): JSX.Element {
     return <MTableCell {...others}>{children}</MTableCell>;

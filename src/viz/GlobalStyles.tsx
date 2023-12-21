@@ -4,7 +4,7 @@ import {
     GlobalStylesProps as MGlobalStylesProps
 } from '@mui/material';
 
-export type GlobalStylesProps = MGlobalStylesProps
+export type GlobalStylesProps = MGlobalStylesProps;
 
 function GlobalStyles(props: GlobalStylesProps): JSX.Element {
     return <MGlobalStyles {...props} />;

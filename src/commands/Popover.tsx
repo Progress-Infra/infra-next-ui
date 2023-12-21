@@ -4,7 +4,7 @@ import {
     PopoverProps as MPopoverProps
 } from '@mui/material';
 
-export type PopoverProps = MPopoverProps
+export type PopoverProps = MPopoverProps;
 
 function Popover({ children, ...others }: PopoverProps): JSX.Element {
     return <MPopover {...others}>{children}</MPopover>;

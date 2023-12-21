@@ -65,7 +65,7 @@ function StorePageHeader({
     React.useEffect(() => {
         const visible: (FilterListProps | FilterListProps)[] = [],
             hidden: FilterListProps[] = [],
-            filterVal: object = {};
+            filterVal: { [key: string]: unknown } = {};
 
         filters &&
             filters.forEach((f) => {

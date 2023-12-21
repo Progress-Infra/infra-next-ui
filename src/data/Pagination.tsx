@@ -4,7 +4,7 @@ import {
     PaginationProps as MPaginationProps
 } from '@mui/material';
 
-export type PaginationProps = MPaginationProps
+export type PaginationProps = MPaginationProps;
 
 function Pagination(props: PaginationProps): JSX.Element {
     return <MPagination {...props} />;

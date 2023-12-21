@@ -12,12 +12,12 @@ export type AutocompleteProps<
     FreeSolo extends boolean | undefined,
     ChipComponent extends React.ElementType = ChipTypeMap['defaultComponent']
 > = MAutocompleteProps<
-        Value,
-        Multiple,
-        DisableClearable,
-        FreeSolo,
-        ChipComponent
-    >
+    Value,
+    Multiple,
+    DisableClearable,
+    FreeSolo,
+    ChipComponent
+>;
 
 function Autocomplete<
     Value,

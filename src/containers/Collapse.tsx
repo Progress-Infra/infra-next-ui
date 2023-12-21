@@ -4,7 +4,7 @@ import {
     CollapseProps as MCollapseProps
 } from '@mui/material';
 
-export type CollapseProps = MCollapseProps
+export type CollapseProps = MCollapseProps;
 
 function Collapse({ children, ...others }: CollapseProps): JSX.Element {
     return <MCollapse {...others}>{children}</MCollapse>;

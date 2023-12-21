@@ -4,7 +4,7 @@ import {
     AccordionActionsProps as MAccordionActionsProps
 } from '@mui/material';
 
-export type AccordionActionsProps = MAccordionActionsProps
+export type AccordionActionsProps = MAccordionActionsProps;
 
 function AccordionActions({
     children,
