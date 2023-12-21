@@ -4,7 +4,7 @@ import {
     DialogContentProps as MDialogContentProps
 } from '@mui/material';
 
-export type DialogContentProps = MDialogContentProps
+export type DialogContentProps = MDialogContentProps;
 
 function DialogContent({
     children,

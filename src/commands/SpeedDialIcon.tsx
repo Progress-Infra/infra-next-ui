@@ -4,7 +4,7 @@ import {
     SpeedDialIconProps as MSpeedDialIconProps
 } from '@mui/material';
 
-export type SpeedDialIconProps = MSpeedDialIconProps
+export type SpeedDialIconProps = MSpeedDialIconProps;
 
 function SpeedDialIcon(props: SpeedDialIconProps): JSX.Element {
     return <MSpeedDialIcon {...props} />;

@@ -4,7 +4,7 @@ import {
     ImageListItemBarProps as MImageListItemBarProps
 } from '@mui/material';
 
-export type ImageListItemBarProps = MImageListItemBarProps
+export type ImageListItemBarProps = MImageListItemBarProps;
 
 function ImageListItemBar({
     children,

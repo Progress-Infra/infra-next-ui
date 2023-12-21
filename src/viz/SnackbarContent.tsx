@@ -4,7 +4,7 @@ import {
     SnackbarContentProps as MSnackbarContentProps
 } from '@mui/material';
 
-export type SnackbarContentProps = MSnackbarContentProps
+export type SnackbarContentProps = MSnackbarContentProps;
 
 function SnackbarContent(props: SnackbarContentProps): JSX.Element {
     return <MSnackbarContent {...props} />;

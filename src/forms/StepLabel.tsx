@@ -4,7 +4,7 @@ import {
     StepLabelProps as MStepLabelProps
 } from '@mui/material';
 
-export type StepLabelProps = MStepLabelProps
+export type StepLabelProps = MStepLabelProps;
 
 function StepLabel({ children, ...others }: StepLabelProps): JSX.Element {
     return <MStepLabel {...others}>{children}</MStepLabel>;

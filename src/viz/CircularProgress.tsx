@@ -4,7 +4,7 @@ import {
     CircularProgressProps as MCircularProgressProps
 } from '@mui/material';
 
-export type CircularProgressProps = MCircularProgressProps
+export type CircularProgressProps = MCircularProgressProps;
 
 function CircularProgress(props: CircularProgressProps): JSX.Element {
     return <MCircularProgress {...props} />;

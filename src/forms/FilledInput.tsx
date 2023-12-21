@@ -4,7 +4,7 @@ import {
     FilledInputProps as MFilledInputProps
 } from '@mui/material';
 
-export type FilledInputProps = MFilledInputProps
+export type FilledInputProps = MFilledInputProps;
 
 function FilledInput(props: FilledInputProps): JSX.Element {
     return <MFilledInput {...props} />;

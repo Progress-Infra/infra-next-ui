@@ -4,7 +4,7 @@ import {
     AccordionDetailsProps as MAccordionDetailsProps
 } from '@mui/material';
 
-export type AccordionDetailsProps = MAccordionDetailsProps
+export type AccordionDetailsProps = MAccordionDetailsProps;
 
 function AccordionDetails({
     children,

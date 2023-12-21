@@ -4,7 +4,7 @@ import {
     DateTimePickerProps as MDateTimePickerProps
 } from '@mui/x-date-pickers';
 
-export type DateTimePickerProps<TDate> = MDateTimePickerProps<TDate>
+export type DateTimePickerProps<TDate> = MDateTimePickerProps<TDate>;
 
 function DateTimePicker<TDate>(props: DateTimePickerProps<TDate>): JSX.Element {
     return <MDateTimePicker {...props} />;

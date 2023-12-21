@@ -4,7 +4,7 @@ import {
     StepIconProps as MStepIconProps
 } from '@mui/material';
 
-export type StepIconProps = MStepIconProps
+export type StepIconProps = MStepIconProps;
 
 function StepIcon(props: StepIconProps): JSX.Element {
     return <MStepIcon {...props} />;

@@ -4,7 +4,7 @@ import {
     StepConnectorProps as MStepConnectorProps
 } from '@mui/material';
 
-export type StepConnectorProps = MStepConnectorProps
+export type StepConnectorProps = MStepConnectorProps;
 
 function StepConnector(props: StepConnectorProps): JSX.Element {
     return <MStepConnector {...props} />;

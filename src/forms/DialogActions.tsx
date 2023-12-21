@@ -4,7 +4,7 @@ import {
     DialogActionsProps as MDialogActionsProps
 } from '@mui/material';
 
-export type DialogActionsProps = MDialogActionsProps
+export type DialogActionsProps = MDialogActionsProps;
 
 function DialogActions({
     children,

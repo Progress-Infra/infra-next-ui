@@ -3,7 +3,7 @@ import { Box, BoxProps } from '../layout';
 import * as echarts from 'echarts';
 import { useTheme } from '@mui/material';
 
-export type chartProps = echarts.EChartsOption
+export type chartProps = echarts.EChartsOption;
 export interface ChartProps {
     box?: BoxProps;
     chart: chartProps;

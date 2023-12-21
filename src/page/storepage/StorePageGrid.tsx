@@ -51,7 +51,7 @@ function StorePageGrid({
                     density={density}
                     hideFooterSelectedRowCount={hideFooterSelectedRowCount}
                     loading={isLoading}
-                    rows={gridRows}
+                    rows={gridRows ?? []}
                     slots={{
                         loadingOverlay: LinearProgress
                     }}

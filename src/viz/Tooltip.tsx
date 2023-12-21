@@ -4,7 +4,7 @@ import {
     TooltipProps as MTooltipProps
 } from '@mui/material';
 
-export type TooltipProps = MTooltipProps
+export type TooltipProps = MTooltipProps;
 
 function Tooltip({ children, ...others }: TooltipProps): JSX.Element {
     return <MTooltip {...others}>{children}</MTooltip>;

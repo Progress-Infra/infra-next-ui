@@ -4,7 +4,7 @@ import {
     OutlinedInputProps as MOutlinedInputProps
 } from '@mui/material';
 
-export type OutlinedInputProps = MOutlinedInputProps
+export type OutlinedInputProps = MOutlinedInputProps;
 
 function OutlinedInput(props: OutlinedInputProps): JSX.Element {
     return <MOutlinedInput {...props} />;

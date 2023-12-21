@@ -4,7 +4,7 @@ import {
     CardActionsProps as MCardActionsProps
 } from '@mui/material';
 
-export type CardActionsProps = MCardActionsProps
+export type CardActionsProps = MCardActionsProps;
 
 function CardActions({ children, ...others }: CardActionsProps): JSX.Element {
     return <MCardActions {...others}>{children}</MCardActions>;
