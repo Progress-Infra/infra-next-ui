@@ -20,7 +20,7 @@ function StorePageGrid({
     rowsApi,
     ...others
 }: StorePageGridProps) {
-    const [gridRows, setGridRows] = React.useState<object[] | undefined>(rows),
+    const [gridRows, setGridRows] = React.useState<object[]>(rows || []),
         filterValue = useRecoilValue(FilterValue),
         [isLoading, setIsLoading] = React.useState<boolean>(!!loading),
         [errMessage, setErrMessage] = React.useState<string | null>(null);

@@ -120,81 +120,62 @@ function TopNavBar({
                 <Logo appName={appName} />
                 {navs.map((n) => (
                     <div key={n.name}>
-                        <Button
-                            onClick={(
-                                e: React.MouseEvent<HTMLButtonElement>
-                            ) => {
-                                if (n.path) {
-                                    nav(n.path);
-                                } else {
-                                    setAnchors({
-                                        ...anchors,
-                                        ...{ [n.name]: e.currentTarget }
-                                    });
+                            <Button
+                                endIcon={
+                                    n.children ?
+                                        <Icon
+                                            faKey={anchors[n.name] ? "angle-up" : "angle-down"}
+                                            sx={{ color: n.name === activeNav ? "text.primary" : "text.secondary" }}
+                                        /> :
+                                        undefined
                                 }
-                            }}
-                        >
-                            <Typography
-                                color={
-                                    n.name === activeNav
-                                        ? 'text.primary'
-                                        : 'text.secondary'
-                                }
-                                variant="body1"
-                            >
-                                {n.name}
-                            </Typography>
-                            {n.children && (
-                                <Typography
-                                    color={
-                                        n.name === activeNav
-                                            ? 'text.primary'
-                                            : 'text.secondary'
+                                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                                    if (n.path) {
+                                        nav(n.path);
                                     }
-                                    variant="body1"
-                                >
-                                    <Icon
-                                        faKey="angle-down"
-                                        sx={{
-                                            paddingLeft: '4px',
-                                            paddingTop: '4px'
-                                        }}
-                                    />
-                                </Typography>
-                            )}
-                        </Button>
-                        {n.children && (
-                            <Menu
-                                anchorEl={anchors[n.name]}
-                                open={!!anchors[n.name]}
-                                onClose={() => {
-                                    setAnchors({
-                                        ...anchors,
-                                        ...{ [n.name]: null }
-                                    });
+                                    else {
+                                        setAnchors({ ...anchors, ...{ [n.name]: e.currentTarget } });
+                                    }
                                 }}
                             >
-                                {n.children.map((c) => (
-                                    <MenuItem
-                                        key={c.name}
-                                        onClick={() => {
-                                            setAnchors({
-                                                ...anchors,
-                                                ...{ [n.name]: null }
-                                            });
-                                            nav(c.path);
-                                        }}
-                                    >
-                                        {c.name}
-                                    </MenuItem>
-                                ))}
-                            </Menu>
-                        )}
-                    </div>
-                ))}
-                <div style={{ flex: 'auto' }} />
-                <IconButton onClick={handleClickPrefs}>
-                    <Icon faKey="gear" />
+                                {n.name}
+                            </Button>
+                            {
+                                n.children &&
+                                <Menu
+                                    anchorEl={anchors[n.name]}
+                                    open={!!anchors[n.name]}
+                                    onClose={() => {
+                                        setAnchors({ ...anchors, ...{ [n.name]: null } });
+                                    }}
+                                >
+                                    {
+                                        n.children.map(c => (
+                                            <MenuItem
+                                                key={c.name}
+                                                onClick={() => {
+                                                    setAnchors({ ...anchors, ...{ [n.name]: null } });
+                                                    nav(c.path);
+                                                }}
+                                            >
+                                                {c.name}
+                                            </MenuItem>
+                                        ))
+                                    }
+                                </Menu>
+                            }
+                        </div>
+                    ))
+                }
+                <div
+                    style={{ flex: "auto" }}
+                />
+                <IconButton
+                    onClick={handleClickPrefs}
+                >
+                    <Icon
+                        faKey="gear"
+                    />
                 </IconButton>
             </Stack>
 

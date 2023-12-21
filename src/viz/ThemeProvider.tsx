@@ -45,6 +45,13 @@ function ThemeProvider({ children }: ThemeProviderProps): JSX.Element {
                                     textTransform: 'none'
                                 }
                             }
+                        },
+                        MuiButtonGroup: {
+                            styleOverrides: {
+                                root: {
+                                    textTransform: "none"
+                                }
+                            }
                         }
                     },
                     palette: {

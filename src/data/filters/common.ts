@@ -26,6 +26,14 @@ export interface FilterTreeChangeEventProps {
     value: number | string
 }
 
+export interface FilterTreeNodeProps {
+    iconKey?: string,
+    id: number | string,
+    label: string,
+    param?: string,
+    parentId?: number | string
+}
+
 export interface FilterToggleChangeEventProps {
     param: string,
     value: (number | string)[]
@@ -63,16 +71,11 @@ export interface FilterToggleProps {
 
 export interface FilterTreeProps {
     type: "tree",
-    param: string,
-    nodes: {
-        iconKey?: string,
-        id: number | string,
-        label: string,
-        param?: string,
-        parentId?: number | string
-    }[]
+    label: string,
+    nodes: FilterTreeNodeProps[],
     onChange?: (e: FilterTreeChangeEventProps) => void,
-    placeholder?: string,
+    onDelete?: (e: string) => void,
+    param: string,
     value?: number | string
 }
 

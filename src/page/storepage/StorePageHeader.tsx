@@ -65,7 +65,7 @@ function StorePageHeader({
     React.useEffect(() => {
         const visible: (FilterListProps | FilterListProps)[] = [],
             hidden: FilterListProps[] = [],
-            filterVal: object = {};
+            filterVal: any = {};
 
         filters &&
             filters.forEach((f) => {
@@ -172,49 +172,40 @@ function StorePageHeader({
                                     }
 
                                     setQS(qs);
-                                    f.onChange && f.onChange(e);
                                 }
                             }
                         });
 
-                        if (toggleValue && toggleValue.length) {
-                            filterVal[f.param] = toggleValue;
-                        } else {
-                            delete filterVal[f.param];
+                    break;
+                case "tree":
+                    setNavFilter({
+                        ...f,
+                        ...{
+                            value: f.value || qs.get(f.param) || undefined,
+                            onChange: (e: FilterTreeChangeEventProps) => {
+                                //todo: update other params as needed
+
+                                qs.set(e.param, e.value.toString());
+                                setQS(qs);
+
+                                f.onChange && f.onChange(e);
+                            },
+                            onDelete: ((e: string) => {
+                                //todo: update other params as needed
+
+                                qs.delete(e);
+                                setQS(qs);
+
+                                f.onDelete && f.onDelete(e);
+                            })
                         }
-
-                        break;
-                    case 'tree':
-                        setNavFilter({
-                            ...f,
-                            ...{
-                                value: f.value || qs.get(f.param) || undefined,
-                                onChange: (e: FilterTreeChangeEventProps) => {
-                                    if (e.value) {
-                                        qs.set(e.param, e.value.toString());
-                                    } else {
-                                        qs.delete(e.param);
-                                    }
-
-                                    setQS(qs);
-                                    f.onChange && f.onChange(e);
-                                }
-                            }
-                        });
-
-                        if (f.value) {
-                            filterVal[f.param] = f.value;
-                        } else {
-                            delete filterVal[f.param];
-                        }
+                    });
 
                         break;
                     default:
                         break;
                 }
             });
-
-        //console.log(`filterVal=${JSON.stringify(filterVal, null, 4)}`);
 
         setVisibleFilters(visible);
         setHiddenFilters(hidden);
@@ -228,7 +219,7 @@ function StorePageHeader({
                 setCount(result);
             });
         }
-    }, [countApi, filterValue, setCount]);
+    }, [filterValue]);
 
     React.useEffect(() => {
         if (statusApi) {
