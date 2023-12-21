@@ -1,16 +1,10 @@
-import * as React from "react";
-import { Menu as MMenu, MenuProps as MMenuProps } from "@mui/material";
+import * as React from 'react';
+import { Menu as MMenu, MenuProps as MMenuProps } from '@mui/material';
 
-export interface MenuProps extends MMenuProps { }
+export type MenuProps = MMenuProps
 
 function Menu({ children, ...others }: MenuProps): JSX.Element {
-    return (
-        <MMenu
-            {...others}
-        >
-            {children}
-        </MMenu>
-    )
+    return <MMenu {...others}>{children}</MMenu>;
 }
 
 export default Menu;

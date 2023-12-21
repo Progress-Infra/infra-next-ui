@@ -1,16 +1,10 @@
-import * as React from "react";
-import { Fade as MFade, FadeProps as MFadeProps } from "@mui/material";
+import * as React from 'react';
+import { Fade as MFade, FadeProps as MFadeProps } from '@mui/material';
 
-export interface FadeProps extends MFadeProps { }
+export type FadeProps = MFadeProps
 
 function Fade({ children, ...others }: FadeProps): JSX.Element {
-    return (
-        <MFade
-            {...others}
-        >
-            {children}
-        </MFade>
-    )
+    return <MFade {...others}>{children}</MFade>;
 }
 
 export default Fade;

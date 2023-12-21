@@ -1,21 +1,26 @@
-import { DataGrid, DataGridProps } from "@mui/x-data-grid";
-import * as React from "react";
-import { useRecoilValue } from "recoil";
-import { FilterValue } from "./StorePageState";
-import { Alert, CircularProgress, Snackbar } from "@mui/material";
+import { DataGrid, DataGridProps } from '@mui/x-data-grid';
+import * as React from 'react';
+import { useRecoilValue } from 'recoil';
+import { FilterValue } from './StorePageState';
+import { Alert, LinearProgress, Snackbar } from '@mui/material';
 
-type omittedProps = "rows";
+type omittedProps = 'rows';
 
 export type StorePageGridProps = Omit<DataGridProps, omittedProps> & {
-    rows?: object[],
-    rowsApi?: (args: object) => Promise<object[]>
-}
+    rows?: object[];
+    rowsApi?: (args: object) => Promise<object[]>;
+};
 
-function StorePageGrid({ autoPageSize = true, density = "compact", hideFooterSelectedRowCount = true, loading, rows, rowsApi, ...others }
-    : StorePageGridProps) {
-
-    const
-        [gridRows, setGridRows] = React.useState<object[] | undefined>(rows),
+function StorePageGrid({
+    autoPageSize = true,
+    density = 'compact',
+    hideFooterSelectedRowCount = true,
+    loading,
+    rows,
+    rowsApi,
+    ...others
+}: StorePageGridProps) {
+    const [gridRows, setGridRows] = React.useState<object[] | undefined>(rows),
         filterValue = useRecoilValue(FilterValue),
         [isLoading, setIsLoading] = React.useState<boolean>(!!loading),
         [errMessage, setErrMessage] = React.useState<string | null>(null);
@@ -25,7 +30,7 @@ function StorePageGrid({ autoPageSize = true, density = "compact", hideFooterSel
             setIsLoading(true);
 
             rowsApi(filterValue)
-                .then(result => {
+                .then((result) => {
                     setGridRows(result);
                     setErrMessage(null);
                 })
@@ -41,36 +46,34 @@ function StorePageGrid({ autoPageSize = true, density = "compact", hideFooterSel
     return (
         <>
             {
-                gridRows ?
-                    <DataGrid
-                        autoPageSize={autoPageSize}
-                        density={density}
-                        hideFooterSelectedRowCount={hideFooterSelectedRowCount}
-                        loading={isLoading}
-                        rows={gridRows}
-                        {...others}
-                    /> :
-                    <CircularProgress />
+                <DataGrid
+                    autoPageSize={autoPageSize}
+                    density={density}
+                    hideFooterSelectedRowCount={hideFooterSelectedRowCount}
+                    loading={isLoading}
+                    rows={gridRows}
+                    slots={{
+                        loadingOverlay: LinearProgress
+                    }}
+                    {...others}
+                />
             }
             <Snackbar
-                anchorOrigin={{ vertical: "top", horizontal: "right" }}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                 autoHideDuration={10000}
                 onClose={(_, reason) => {
-                    if (reason === "timeout") {
+                    if (reason === 'timeout') {
                         setErrMessage(null);
                     }
                 }}
                 open={!!errMessage}
             >
-                <Alert
-                    severity="error"
-                    variant="filled"
-                >
+                <Alert severity="error" variant="filled">
                     {errMessage}
                 </Alert>
             </Snackbar>
         </>
-    )
+    );
 }
 
 export default StorePageGrid;

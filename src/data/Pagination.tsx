@@ -1,14 +1,13 @@
-import * as React from "react";
-import { Pagination as MPagination, PaginationProps as MPaginationProps } from "@mui/material";
+import * as React from 'react';
+import {
+    Pagination as MPagination,
+    PaginationProps as MPaginationProps
+} from '@mui/material';
 
-export interface PaginationProps extends MPaginationProps { }
+export type PaginationProps = MPaginationProps
 
 function Pagination(props: PaginationProps): JSX.Element {
-    return (
-        <MPagination
-            {...props}
-        />
-    )
+    return <MPagination {...props} />;
 }
 
 export default Pagination;

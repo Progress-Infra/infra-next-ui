@@ -1,16 +1,10 @@
-import * as React from "react";
-import { Grow as MGrow, GrowProps as MGrowProps } from "@mui/material";
+import * as React from 'react';
+import { Grow as MGrow, GrowProps as MGrowProps } from '@mui/material';
 
-export interface GrowProps extends MGrowProps { }
+export type GrowProps = MGrowProps
 
 function Grow({ children, ...others }: GrowProps): JSX.Element {
-    return (
-        <MGrow
-            {...others}
-        >
-            {children}
-        </MGrow>
-    )
+    return <MGrow {...others}>{children}</MGrow>;
 }
 
 export default Grow;

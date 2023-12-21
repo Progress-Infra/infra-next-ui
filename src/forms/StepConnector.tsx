@@ -1,14 +1,13 @@
-import * as React from "react";
-import { StepConnector as MStepConnector, StepConnectorProps as MStepConnectorProps } from "@mui/material";
+import * as React from 'react';
+import {
+    StepConnector as MStepConnector,
+    StepConnectorProps as MStepConnectorProps
+} from '@mui/material';
 
-export interface StepConnectorProps extends MStepConnectorProps { }
+export type StepConnectorProps = MStepConnectorProps
 
 function StepConnector(props: StepConnectorProps): JSX.Element {
-    return (
-        <MStepConnector
-            {...props}
-        />
-    )
+    return <MStepConnector {...props} />;
 }
 
 export default StepConnector;
