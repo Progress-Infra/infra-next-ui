@@ -1,6 +1,5 @@
 import {
     AppBar,
-    Button,
     IconButton,
     Link,
     Menu,
@@ -13,6 +12,7 @@ import * as React from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { Icon } from '../viz';
 import UserPreferenceEditor from '../editors/UserPreferenceEditor';
+import { Button } from '../commands';
 
 export interface NavLinkProps {
     name: string;
@@ -138,7 +138,12 @@ function TopNavBar({
                                     }
                                 }}
                             >
-                                {n.name}
+                                <Typography
+                                    color={n.name === activeNav ? "text.primary" : "text.secondary"}
+                                    sx={{display:"inline-flex"}}
+                                >
+                                    {n.name}
+                                </Typography>
                             </Button>
                             {
                                 n.children &&
