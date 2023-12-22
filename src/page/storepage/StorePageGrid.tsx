@@ -1,12 +1,17 @@
-import { DataGrid, DataGridProps } from '@mui/x-data-grid';
+import { DataGrid, DataGridProps, GridColDef } from '@mui/x-data-grid';
 import * as React from 'react';
 import { useRecoilValue } from 'recoil';
 import { FilterValue } from './StorePageState';
 import { Alert, LinearProgress, Snackbar } from '@mui/material';
 
-type omittedProps = 'rows';
+type omittedProps = 'rows' | 'columns';
+
+export type GridColumn = GridColDef & {
+    hidden?: boolean;
+};
 
 export type StorePageGridProps = Omit<DataGridProps, omittedProps> & {
+    columns: GridColumn[];
     rows?: object[];
     rowsApi?: (args: object) => Promise<object[]>;
 };
