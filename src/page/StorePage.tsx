@@ -1,14 +1,15 @@
 import * as React from 'react';
 import { Box, Stack } from '@mui/material';
 import { RecoilRoot, useSetRecoilState } from 'recoil';
-import StorePageGrid, { StorePageGridProps } from './storepage/StorePageGrid';
-import StorePageHeader, {
-    StorePageHeaderProps
-} from './storepage/StorePageHeader';
-import StorePageToolbar, {
+import {
+    StorageKey,
+    StorePageGrid,
+    StorePageGridProps,
+    StorePageHeader,
+    StorePageHeaderProps,
+    StorePageToolbar,
     StorePageToolbarProps
-} from './storepage/StorePageToolbar';
-import { StorageKey } from './storepage/StorePageState';
+} from './storepage/index';
 
 export type StorePageProps = StorePageHeaderProps &
     StorePageToolbarProps &
@@ -24,6 +25,7 @@ function StorePage({
     statusApi,
     storageKey,
     tools,
+    columns,
     title,
     ...others
 }: StorePageProps) {
@@ -46,7 +48,7 @@ function StorePage({
                     statusApi={statusApi}
                     title={title}
                 />
-                <StorePageToolbar tools={tools} />
+                <StorePageToolbar tools={tools} columns={columns} />
                 <Box sx={{ flexGrow: 1 }}>
                     <StorePageGrid {...others} />
                 </Box>

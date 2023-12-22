@@ -11,7 +11,7 @@ export type GridColumn = GridColDef & {
 };
 
 export type StorePageGridProps = Omit<DataGridProps, omittedProps> & {
-    columns: GridColumn[];
+    columns?: GridColumn[];
     rows?: object[];
     rowsApi?: (args: object) => Promise<object[]>;
 };
@@ -21,6 +21,7 @@ function StorePageGrid({
     density = 'compact',
     hideFooterSelectedRowCount = true,
     loading,
+    columns,
     rows,
     rowsApi,
     ...others
@@ -56,6 +57,7 @@ function StorePageGrid({
                     density={density}
                     hideFooterSelectedRowCount={hideFooterSelectedRowCount}
                     loading={isLoading}
+                    columns={columns ?? []}
                     rows={gridRows ?? []}
                     slots={{
                         loadingOverlay: LinearProgress

@@ -10,7 +10,7 @@ export interface StorePageToolProps extends ToolsProps {
     isPrimary?: boolean;
 }
 
-function StorePageTool({
+export function StorePageTool({
     children,
     disabled,
     iconKey,

@@ -4,6 +4,7 @@ import StorePageTool from './StorePageTool';
 import { Button } from '../../commands';
 import { Icon } from '../../viz';
 import { useTranslation } from 'react-i18next';
+import StorePageColumns, { StorePageColumnsProps } from './StorePageColumns';
 
 interface ToolProps {
     iconKey?: string;
@@ -17,11 +18,11 @@ export interface ToolsProps extends ToolProps {
     children?: ToolProps[];
 }
 
-export type StorePageToolbarProps = {
+export type StorePageToolbarProps = StorePageColumnsProps & {
     tools?: ToolsProps[];
 };
 
-function StorePageToolbar({ tools }: StorePageToolbarProps) {
+function StorePageToolbar({ tools, columns }: StorePageToolbarProps) {
     const { t } = useTranslation('nui');
 
     return (
@@ -44,12 +45,7 @@ function StorePageToolbar({ tools }: StorePageToolbarProps) {
                 >
                     {t('command.grid.sorting')}
                 </Button>
-                <Button
-                    endIcon={<Icon faKey="angle-down" />}
-                    startIcon={<Icon faKey="table-columns" />}
-                >
-                    {t('command.grid.columns')}
-                </Button>
+                <StorePageColumns columns={columns} />
             </Stack>
         </Toolbar>
     );
