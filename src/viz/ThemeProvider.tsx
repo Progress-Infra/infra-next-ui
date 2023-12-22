@@ -49,7 +49,7 @@ function ThemeProvider({ children }: ThemeProviderProps): JSX.Element {
                         MuiButtonGroup: {
                             styleOverrides: {
                                 root: {
-                                    textTransform: "none"
+                                    textTransform: 'none'
                                 }
                             }
                         }

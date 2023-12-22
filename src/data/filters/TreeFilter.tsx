@@ -1,25 +1,29 @@
 import React from 'react';
-import {Breadcrumbs, Link, Stack, Typography } from '@mui/material';
+import { Breadcrumbs, Link, Stack, Typography } from '@mui/material';
 import Icon from '../../viz/Icon';
 import { FilterTreeNodeProps, FilterTreeProps } from './common';
 import Button from '../../commands/Button';
 
-function TreeFilter({ label, nodes, onChange, onDelete, param, value }: FilterTreeProps) {
-    const
-        [crumbs, setCrumbs] = React.useState<FilterTreeNodeProps[]>([]);
+function TreeFilter({
+    label,
+    nodes,
+    onChange,
+    onDelete,
+    param,
+    value
+}: FilterTreeProps) {
+    const [crumbs, setCrumbs] = React.useState<FilterTreeNodeProps[]>([]);
 
     React.useEffect(() => {
-        let list: FilterTreeNodeProps[] = [];
+        const list: FilterTreeNodeProps[] = [];
 
         if (value) {
-            const addCrumb = (id: (string | number)) => {
-                const node = nodes.find(n => (
-                    n.id === id
-                ));
+            const addCrumb = (id: string | number) => {
+                const node = nodes.find((n) => n.id === id);
 
                 if (node) {
                     if (node.parentId) {
-                        addCrumb(node.parentId)
+                        addCrumb(node.parentId);
                     }
 
                     list.push(node);
@@ -54,64 +58,53 @@ function TreeFilter({ label, nodes, onChange, onDelete, param, value }: FilterTr
                 >
                     <Typography
                         color="text.secondary"
-                        sx={{display:"inline-flex"}}
+                        sx={{ display: 'inline-flex' }}
                     >
-                        <Icon
-                            faKey="house"
-                            sx={{ mr: 0.5 }}
-                        />
+                        <Icon faKey="house" sx={{ mr: 0.5 }} />
                     </Typography>
                     {label}
                 </Link>
-                {
-                    crumbs.map((c, i) => (
-                        <div
-                            key={c.id}
-                        >
-                            {
-                                (i + 1) === crumbs.length ?
+                {crumbs.map((c, i) => (
+                    <div key={c.id}>
+                        {i + 1 === crumbs.length ? (
+                            <Typography
+                                sx={{ display: 'inline-flex' }}
+                                color="text.secondary"
+                            >
+                                {c.iconKey && (
+                                    <Icon faKey={c.iconKey} sx={{ mr: 0.5 }} />
+                                )}
+                                {c.label}
+                            </Typography>
+                        ) : (
+                            <Link
+                                component="button"
+                                onClick={() => {
+                                    onChange &&
+                                        onChange({
+                                            param: param,
+                                            value: c.id
+                                        });
+                                }}
+                                underline="hover"
+                                variant="body2"
+                            >
+                                {c.iconKey && (
                                     <Typography
-                                        sx={{ display: 'inline-flex'}}
                                         color="text.secondary"
+                                        sx={{ display: 'inline-flex' }}
                                     >
-                                        {
-                                            c.iconKey &&
-                                            <Icon
-                                                faKey={c.iconKey}
-                                                sx={{ mr: 0.5 }}
-                                            />
-                                        }
-                                        {c.label}
-                                    </Typography> :
-                                    <Link
-                                        component="button"
-                                        onClick={() => {
-                                            onChange && onChange({
-                                                param: param,
-                                                value: c.id
-                                            });
-                                        }}
-                                        underline="hover"
-                                        variant="body2"
-                                    >
-                                        {
-                                            c.iconKey &&
-                                            <Typography
-                                                color="text.secondary"
-                                                sx={{display:"inline-flex"}}
-                                            >
-                                                <Icon
-                                                    faKey={c.iconKey}
-                                                    sx={{ mr: 0.5 }}
-                                                />
-                                            </Typography>
-                                        }
-                                        {label}
-                                    </Link>
-                            }
-                        </div>
-                    ))
-                }
+                                        <Icon
+                                            faKey={c.iconKey}
+                                            sx={{ mr: 0.5 }}
+                                        />
+                                    </Typography>
+                                )}
+                                {label}
+                            </Link>
+                        )}
+                    </div>
+                ))}
             </Breadcrumbs>
         </Stack>
     );

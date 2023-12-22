@@ -176,30 +176,30 @@ function StorePageHeader({
                             }
                         });
 
-                    break;
-                case "tree":
-                    setNavFilter({
-                        ...f,
-                        ...{
-                            value: f.value || qs.get(f.param) || undefined,
-                            onChange: (e: FilterTreeChangeEventProps) => {
-                                //todo: update other params as needed
+                        break;
+                    case 'tree':
+                        setNavFilter({
+                            ...f,
+                            ...{
+                                value: f.value || qs.get(f.param) || undefined,
+                                onChange: (e: FilterTreeChangeEventProps) => {
+                                    //todo: update other params as needed
 
-                                qs.set(e.param, e.value.toString());
-                                setQS(qs);
+                                    qs.set(e.param, e.value.toString());
+                                    setQS(qs);
 
-                                f.onChange && f.onChange(e);
-                            },
-                            onDelete: ((e: string) => {
-                                //todo: update other params as needed
+                                    f.onChange && f.onChange(e);
+                                },
+                                onDelete: (e: string) => {
+                                    //todo: update other params as needed
 
-                                qs.delete(e);
-                                setQS(qs);
+                                    qs.delete(e);
+                                    setQS(qs);
 
-                                f.onDelete && f.onDelete(e);
-                            })
-                        }
-                    });
+                                    f.onDelete && f.onDelete(e);
+                                }
+                            }
+                        });
 
                         break;
                     default:
