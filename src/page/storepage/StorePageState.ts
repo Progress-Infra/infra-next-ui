@@ -1,6 +1,8 @@
-import { GridRowSelectionModel } from '@mui/x-data-grid';
+import {
+    GridColumnVisibilityModel,
+    GridRowSelectionModel
+} from '@mui/x-data-grid';
 import { atom } from 'recoil';
-import { GridColumn } from './StorePageGrid';
 
 export const FilterValue = atom<object | null>({
         key: 'FilterValue',
@@ -10,8 +12,8 @@ export const FilterValue = atom<object | null>({
         key: 'GridSelection',
         default: null
     }),
-    GridColumns = atom<GridColumn[] | null>({
-        key: 'GridColumns',
+    GridColumnVisibility = atom<GridColumnVisibilityModel | null>({
+        key: 'GridColumnVisibility',
         default: null
     }),
     StorageKey = atom<string | null>({

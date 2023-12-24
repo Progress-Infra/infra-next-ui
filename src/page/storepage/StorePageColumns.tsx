@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Box, Button, FormControlLabel, Popover, Switch } from '@mui/material';
 import { Icon } from '../../viz';
 import { useTranslation } from 'react-i18next';
-import { GridColumns } from './StorePageState';
+import { GridColumnVisibility } from './StorePageState';
 import { useRecoilState } from 'recoil';
 import { GridColumn } from './StorePageGrid';
 
@@ -12,7 +12,8 @@ export type StorePageColumnsProps = {
 
 function StorePageColumns(props: StorePageColumnsProps): JSX.Element {
     const { columns } = props,
-        [gridColumns, setGridColumns] = useRecoilState(GridColumns),
+        [columnVisibility, setColumnVisibility] =
+            useRecoilState(GridColumnVisibility),
         [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null),
         { t } = useTranslation('nui');
 
@@ -25,20 +26,10 @@ function StorePageColumns(props: StorePageColumnsProps): JSX.Element {
     };
 
     const handleToggle = (colKey: string, checked: boolean) => () => {
-        const colData = structuredClone(gridColumns ?? []);
-        // Lookup column item in recoil data
-        let colItem = colData.find((o) => o.field === colKey);
-        if (colItem) {
-            colItem.hidden = checked;
-        }
-        // if no stored value in recoil, then get default value
-        // and add to recoil storage with newly set hidden prop value
-        else {
-            colItem = columns?.find((o) => o.field === colKey);
-            colData.push(colItem ?? { field: colKey, hidden: checked });
-        }
         // Set new data in recoil
-        setGridColumns(colData);
+        const newColVisibility = columnVisibility ?? {};
+        newColVisibility[colKey] === checked;
+        setColumnVisibility(newColVisibility);
     };
 
     const open = Boolean(anchorEl);
@@ -81,32 +72,32 @@ function StorePageColumns(props: StorePageColumnsProps): JSX.Element {
                     }}
                 >
                     {columns &&
-                        columns
-                            .filter(
-                                (col) =>
-                                    col.hideable === undefined || col.hideable
-                            )
-                            .map((col) => (
-                                <FormControlLabel
-                                    control={
-                                        <Switch
-                                            checked={
-                                                col.hidden === undefined
-                                                    ? true
-                                                    : col.hidden
-                                            }
-                                            onChange={(e, checked) =>
-                                                handleToggle(col.field, checked)
-                                            }
-                                            inputProps={{
-                                                'aria-labelledby': `checkbox-list-label-${col.field}`
-                                            }}
-                                        />
-                                    }
-                                    label={col.headerName}
-                                    key={col.field}
-                                />
-                            ))}
+                        columns.map((col) => (
+                            <FormControlLabel
+                                control={
+                                    <Switch
+                                        disabled={
+                                            col.hideable === undefined
+                                                ? false
+                                                : !col.hideable
+                                        }
+                                        checked={
+                                            col.hidden === undefined
+                                                ? true
+                                                : col.hidden
+                                        }
+                                        onChange={(e, checked) =>
+                                            handleToggle(col.field, checked)
+                                        }
+                                        inputProps={{
+                                            'aria-labelledby': `checkbox-list-label-${col.field}`
+                                        }}
+                                    />
+                                }
+                                label={col.headerName}
+                                key={col.field}
+                            />
+                        ))}
                 </Box>
             </Popover>
         </div>

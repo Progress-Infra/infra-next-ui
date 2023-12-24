@@ -1,7 +1,12 @@
-import { DataGrid, DataGridProps, GridColDef } from '@mui/x-data-grid';
+import {
+    DataGrid,
+    DataGridProps,
+    GridColDef,
+    useGridApiRef
+} from '@mui/x-data-grid';
 import * as React from 'react';
 import { useRecoilValue } from 'recoil';
-import { FilterValue } from './StorePageState';
+import { FilterValue, GridColumnVisibility } from './StorePageState';
 import { Alert, LinearProgress, Snackbar } from '@mui/material';
 
 type omittedProps = 'rows' | 'columns';
@@ -11,7 +16,7 @@ export type GridColumn = GridColDef & {
 };
 
 export type StorePageGridProps = Omit<DataGridProps, omittedProps> & {
-    columns?: GridColumn[];
+    columns: GridColumn[];
     rows?: object[];
     rowsApi?: (args: object) => Promise<object[]>;
 };
@@ -28,8 +33,10 @@ function StorePageGrid({
 }: StorePageGridProps) {
     const [gridRows, setGridRows] = React.useState<object[]>(rows || []),
         filterValue = useRecoilValue(FilterValue),
+        columnVisibility = useRecoilValue(GridColumnVisibility),
         [isLoading, setIsLoading] = React.useState<boolean>(!!loading),
-        [errMessage, setErrMessage] = React.useState<string | null>(null);
+        [errMessage, setErrMessage] = React.useState<string | null>(null),
+        apiRef = useGridApiRef();
 
     React.useEffect(() => {
         if (rowsApi && filterValue) {
@@ -49,18 +56,41 @@ function StorePageGrid({
         }
     }, [setGridRows, rowsApi, filterValue, setIsLoading, setErrMessage]);
 
+    React.useEffect(() => {
+        for (const col of columns) {
+            let isVisible = col.hidden === undefined ? true : !col.hidden;
+            if (
+                col.hideable &&
+                columnVisibility &&
+                col.field in columnVisibility
+            ) {
+                isVisible = columnVisibility[col.field];
+            }
+            apiRef.current.setColumnVisibility(col.field, isVisible);
+        }
+    }, [columnVisibility]);
+
     return (
         <>
             {
                 <DataGrid
+                    apiRef={apiRef}
                     autoPageSize={autoPageSize}
                     density={density}
                     hideFooterSelectedRowCount={hideFooterSelectedRowCount}
                     loading={isLoading}
-                    columns={columns ?? []}
+                    columns={columns}
                     rows={gridRows ?? []}
                     slots={{
                         loadingOverlay: LinearProgress
+                    }}
+                    initialState={{
+                        columns: {
+                            ...columns,
+                            columnVisibilityModel: {
+                                ...columnVisibility
+                            }
+                        }
                     }}
                     {...others}
                 />

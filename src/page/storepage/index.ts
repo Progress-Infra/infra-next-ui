@@ -15,7 +15,7 @@ export {
 export {
     FilterValue,
     GridSelection,
-    GridColumns,
+    GridColumnVisibility,
     StorageKey
 } from './StorePageState';
 export { default as StorePageTool, StorePageToolProps } from './StorePageTool';

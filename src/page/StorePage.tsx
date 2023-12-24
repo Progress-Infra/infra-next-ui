@@ -50,7 +50,7 @@ function StorePage({
                 />
                 <StorePageToolbar tools={tools} columns={columns} />
                 <Box sx={{ flexGrow: 1 }}>
-                    <StorePageGrid {...others} />
+                    <StorePageGrid columns={columns} {...others} />
                 </Box>
             </Stack>
         </RecoilRoot>
