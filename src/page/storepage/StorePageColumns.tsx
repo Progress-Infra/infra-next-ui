@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Box, Button, FormControlLabel, Popover, Switch } from '@mui/material';
+import { Box, FormControlLabel, Popover, Switch } from '@mui/material';
 import { Icon } from '../../viz';
 import { useTranslation } from 'react-i18next';
 import { GridColumnVisibility } from './StorePageState';
 import { useRecoilState } from 'recoil';
 import { GridColumn } from './StorePageGrid';
+import { Button } from '../../commands';
 
 export type StorePageColumnsProps = {
     columns?: GridColumn[];
@@ -32,7 +33,6 @@ function StorePageColumns(props: StorePageColumnsProps): JSX.Element {
         <div>
             <Button
                 aria-describedby={id}
-                variant="contained"
                 onClick={handleClick}
                 endIcon={<Icon faKey="angle-down" />}
                 startIcon={<Icon faKey="table-columns" />}
