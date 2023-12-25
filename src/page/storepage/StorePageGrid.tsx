@@ -60,7 +60,7 @@ function StorePageGrid({
         for (const col of columns) {
             let isVisible = col.hidden === undefined ? true : !col.hidden;
             if (
-                col.hideable &&
+                (col.hideable === undefined || col.hideable) &&
                 columnVisibility &&
                 col.field in columnVisibility
             ) {

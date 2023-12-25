@@ -25,13 +25,6 @@ function StorePageColumns(props: StorePageColumnsProps): JSX.Element {
         setAnchorEl(null);
     };
 
-    const handleToggle = (colKey: string, checked: boolean) => () => {
-        // Set new data in recoil
-        const newColVisibility = columnVisibility ?? {};
-        newColVisibility[colKey] === checked;
-        setColumnVisibility(newColVisibility);
-    };
-
     const open = Boolean(anchorEl);
     const id = open ? 'store-page-columns-popover' : undefined;
 
@@ -72,32 +65,49 @@ function StorePageColumns(props: StorePageColumnsProps): JSX.Element {
                     }}
                 >
                     {columns &&
-                        columns.map((col) => (
-                            <FormControlLabel
-                                control={
-                                    <Switch
-                                        disabled={
-                                            col.hideable === undefined
-                                                ? false
-                                                : !col.hideable
-                                        }
-                                        checked={
-                                            col.hidden === undefined
-                                                ? true
-                                                : col.hidden
-                                        }
-                                        onChange={(e, checked) =>
-                                            handleToggle(col.field, checked)
-                                        }
-                                        inputProps={{
-                                            'aria-labelledby': `checkbox-list-label-${col.field}`
-                                        }}
-                                    />
-                                }
-                                label={col.headerName}
-                                key={col.field}
-                            />
-                        ))}
+                        columns
+                            .filter((o) => o.headerName && o.field)
+                            .map((col) => (
+                                <FormControlLabel
+                                    control={
+                                        <Switch
+                                            disabled={
+                                                col.hideable === undefined
+                                                    ? false
+                                                    : !col.hideable
+                                            }
+                                            checked={
+                                                columnVisibility &&
+                                                col.field in columnVisibility
+                                                    ? columnVisibility[
+                                                          col.field
+                                                      ]
+                                                    : col.hidden === undefined
+                                                      ? true
+                                                      : !col.hidden
+                                            }
+                                            onChange={(_e, checked) =>
+                                                setColumnVisibility(
+                                                    (prevValue) => {
+                                                        const newColVisibility =
+                                                            { ...prevValue } ??
+                                                            {};
+                                                        newColVisibility[
+                                                            col.field
+                                                        ] = checked;
+                                                        return newColVisibility;
+                                                    }
+                                                )
+                                            }
+                                            inputProps={{
+                                                'aria-labelledby': `checkbox-list-label-${col.field}`
+                                            }}
+                                        />
+                                    }
+                                    label={col.headerName}
+                                    key={col.field}
+                                />
+                            ))}
                 </Box>
             </Popover>
         </div>
