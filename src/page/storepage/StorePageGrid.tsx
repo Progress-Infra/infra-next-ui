@@ -5,8 +5,12 @@ import {
     useGridApiRef
 } from '@mui/x-data-grid';
 import * as React from 'react';
-import { useRecoilValue } from 'recoil';
-import { FilterValue, GridColumnVisibility } from './StorePageState';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import {
+    FilterValue,
+    GridColumnVisibility,
+    GridSelection
+} from './StorePageState';
 import { Alert, LinearProgress, Snackbar } from '@mui/material';
 
 type omittedProps = 'rows' | 'columns';
@@ -34,6 +38,7 @@ function StorePageGrid({
     const [gridRows, setGridRows] = React.useState<object[]>(rows || []),
         filterValue = useRecoilValue(FilterValue),
         columnVisibility = useRecoilValue(GridColumnVisibility),
+        [selectedRows, setSelectedRows] = useRecoilState(GridSelection),
         [isLoading, setIsLoading] = React.useState<boolean>(!!loading),
         [errMessage, setErrMessage] = React.useState<string | null>(null),
         apiRef = useGridApiRef();
@@ -81,6 +86,10 @@ function StorePageGrid({
                     loading={isLoading}
                     columns={columns}
                     rows={gridRows ?? []}
+                    rowSelectionModel={selectedRows}
+                    onRowSelectionModelChange={(newSelectionModel) => {
+                        setSelectedRows(newSelectionModel);
+                    }}
                     slots={{
                         loadingOverlay: LinearProgress
                     }}

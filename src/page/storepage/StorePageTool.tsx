@@ -37,7 +37,7 @@ export function StorePageTool({
                 }
                 onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                     setAnchor(e.currentTarget);
-                    onClick && onClick();
+                    onClick && onClick(requiresRow ? gridSelection : undefined);
                 }}
                 startIcon={iconKey ? <Icon faKey={iconKey} /> : undefined}
                 variant={isPrimary ? 'primary' : 'ghost'}
@@ -54,7 +54,12 @@ export function StorePageTool({
                             key={`menuItem${i}`}
                             onClick={() => {
                                 setAnchor(null);
-                                c.onClick && c.onClick();
+                                c.onClick &&
+                                    c.onClick(
+                                        c.requiresRow
+                                            ? gridSelection
+                                            : undefined
+                                    );
                             }}
                         >
                             {c.iconKey && (

@@ -8,9 +8,9 @@ export const FilterValue = atom<object | null>({
         key: 'FilterValue',
         default: null
     }),
-    GridSelection = atom<GridRowSelectionModel | null>({
+    GridSelection = atom<GridRowSelectionModel | undefined>({
         key: 'GridSelection',
-        default: null
+        default: undefined
     }),
     GridColumnVisibility = atom<GridColumnVisibilityModel | null>({
         key: 'GridColumnVisibility',

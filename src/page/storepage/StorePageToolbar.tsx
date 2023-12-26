@@ -5,13 +5,14 @@ import { Button } from '../../commands';
 import { Icon } from '../../viz';
 import { useTranslation } from 'react-i18next';
 import StorePageColumns, { StorePageColumnsProps } from './StorePageColumns';
+import { GridRowSelectionModel } from '@mui/x-data-grid';
 
 interface ToolProps {
     iconKey?: string;
     disabled?: boolean;
     label?: string;
     requiresRow?: boolean;
-    onClick?: () => void;
+    onClick?: (selectedRows: GridRowSelectionModel | undefined) => void;
 }
 
 export interface ToolsProps extends ToolProps {
