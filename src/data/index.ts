@@ -12,6 +12,7 @@ export { default as ListItemText, ListItemTextProps } from "./ListItemText";
 export { default as ListSubheader, ListSubheaderProps } from "./ListSubheader";
 export { default as Pagination, PaginationProps } from "./Pagination";
 export { default as PaginationItem, PaginationItemProps } from "./PaginationItem";
+export { default as Status, StatusType, StatusProps } from "./Status";
 export { default as Table, TableProps } from "./Table";
 export { default as TableBody, TableBodyProps } from "./TableBody";
 export { default as TableCell, TableCellProps } from "./TableCell";
