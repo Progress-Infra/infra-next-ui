@@ -1,9 +1,9 @@
 import React from 'react';
-import { Icon, Tooltip, Typography } from '../viz';
+import { Icon, Tooltip, Typography } from '.';
 import IconButton from '@mui/material/IconButton';
 import { SxProps, Theme, styled } from '@mui/material';
 import { useTranslation } from 'react-i18next';
-import CircularProgress from '../viz/CircularProgress';
+import CircularProgress from './CircularProgress';
 
 export type StatusType =
     | 'success'
@@ -15,7 +15,7 @@ export type StatusType =
     | 'warning'
     | 'unknown';
 
-export type StatusProps = SxProps<Theme> & {
+export type StatusIconButtonProps = SxProps<Theme> & {
     statusType: StatusType;
     statusText?: string;
     incidentLink?: string;
@@ -32,7 +32,7 @@ const OvalBox = styled('div')({
     color: 'white'
 });
 
-const Status: React.FC<StatusProps> = ({
+const StatusIconButton: React.FC<StatusIconButtonProps> = ({
     statusType,
     statusText,
     incidentLink
@@ -147,4 +147,4 @@ const Status: React.FC<StatusProps> = ({
     );
 };
 
-export default Status;
+export default StatusIconButton;
