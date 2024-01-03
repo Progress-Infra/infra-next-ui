@@ -6,14 +6,9 @@ export interface FilterListItemProps {
     label: string
 }
 
-export interface FilterListValueProps {
-    operator: FilterListOperatorType,
-    selected: (number | string)[]
-}
-
 export interface FilterListChangeEventProps {
     param: string,
-    value: FilterListValueProps
+    value: FilterListArgs
 }
 
 export interface FilterSearchChangeEventProps {
@@ -46,7 +41,7 @@ export interface FilterListProps {
     list: FilterListItemProps[],
     onChange?: (e: FilterListChangeEventProps) => void,
     onDelete?: (e: string) => void,
-    value?: FilterListValueProps
+    value?: FilterListArgs
 }
 
 export interface FilterSearchProps {
@@ -80,3 +75,29 @@ export interface FilterTreeProps {
 }
 
 export type FilterProps = (FilterListProps | FilterSearchProps | FilterToggleProps | FilterTreeProps)[]
+
+export interface FilterListArgs {
+    type: "list",
+    operator: FilterListOperatorType,
+    value: (number | string)[]
+}
+
+export interface FilterSearchArgs {
+    type: "search",
+    value: string
+}
+
+export interface FilterToggleArgs {
+    type: "toggle",
+    value: (number | string)[]
+}
+
+export interface FilterTreeArgs {
+    type: "tree",
+    value: {
+        param: string,
+        value: number | string
+    }[]
+}
+
+export type FilterArgs = { [key:string]: (FilterListArgs | FilterSearchArgs | FilterToggleArgs | FilterTreeArgs) }; 

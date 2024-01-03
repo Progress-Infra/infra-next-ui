@@ -2,6 +2,7 @@ import {
     DataGrid,
     DataGridProps,
     GridColDef,
+    GridPaginationModel,
     useGridApiRef
 } from '@mui/x-data-grid';
 import * as React from 'react';
@@ -9,11 +10,18 @@ import { useRecoilState, useRecoilValue } from 'recoil';
 import {
     FilterValue,
     GridColumnVisibility,
-    GridSelection
+    GridSelection,
+    RecordCount
 } from './StorePageState';
 import { Alert, LinearProgress, Snackbar } from '@mui/material';
+import { FilterArgs } from '../../data/filters/common';
 
-type omittedProps = 'rows' | 'columns';
+type omittedProps =
+    | 'columns'
+    | 'disableColumnMenu'
+    | 'filterMode'
+    | 'paginationMode'
+    | 'rows';
 
 export type GridColumn = GridColDef & {
     hidden?: boolean;
@@ -21,12 +29,14 @@ export type GridColumn = GridColDef & {
 
 export type StorePageGridProps = Omit<DataGridProps, omittedProps> & {
     columns: GridColumn[];
+    countApi?: (args: FilterArgs) => Promise<number>;
     rows?: object[];
     rowsApi?: (args: object) => Promise<object[]>;
 };
 
 function StorePageGrid({
     autoPageSize = true,
+    countApi,
     density = 'compact',
     hideFooterSelectedRowCount = true,
     loading,
@@ -38,16 +48,21 @@ function StorePageGrid({
     const [gridRows, setGridRows] = React.useState<object[]>(rows || []),
         filterValue = useRecoilValue(FilterValue),
         columnVisibility = useRecoilValue(GridColumnVisibility),
+        [recordCount, setRecordCount] = useRecoilState(RecordCount),
         [selectedRows, setSelectedRows] = useRecoilState(GridSelection),
         [isLoading, setIsLoading] = React.useState<boolean>(!!loading),
         [errMessage, setErrMessage] = React.useState<string | null>(null),
+        [paging, setPaging] = React.useState<GridPaginationModel | null>(null),
         apiRef = useGridApiRef();
 
     React.useEffect(() => {
-        if (rowsApi && filterValue) {
+        if (rowsApi && filterValue && paging) {
             setIsLoading(true);
 
-            rowsApi(filterValue)
+            rowsApi({
+                filters: filterValue,
+                paging: paging
+            })
                 .then((result) => {
                     setGridRows(result);
                     setErrMessage(null);
@@ -59,7 +74,7 @@ function StorePageGrid({
                     setIsLoading(false);
                 });
         }
-    }, [setGridRows, rowsApi, filterValue, setIsLoading, setErrMessage]);
+    }, [rowsApi, filterValue, paging]);
 
     React.useEffect(() => {
         for (const col of columns) {
@@ -75,24 +90,37 @@ function StorePageGrid({
         }
     }, [columnVisibility]);
 
+    React.useEffect(() => {
+        if (countApi) {
+            countApi(filterValue || {}).then((result) => {
+                setRecordCount(result);
+            });
+        }
+    }, [filterValue]);
+
+    React.useEffect(() => {
+        if (rows && !countApi) {
+            setRecordCount(rows.length);
+        }
+    }, [rows, countApi]);
+
     return (
         <>
             {
                 <DataGrid
+                    {...others}
                     apiRef={apiRef}
                     autoPageSize={autoPageSize}
+                    columns={columns}
                     density={density}
+                    disableColumnMenu
+                    filterMode={rowsApi ? 'server' : 'client'}
                     hideFooterSelectedRowCount={hideFooterSelectedRowCount}
                     loading={isLoading}
-                    columns={columns}
+                    rowCount={recordCount || 0}
                     rows={gridRows ?? []}
                     rowSelectionModel={selectedRows}
-                    onRowSelectionModelChange={(newSelectionModel) => {
-                        setSelectedRows(newSelectionModel);
-                    }}
-                    slots={{
-                        loadingOverlay: LinearProgress
-                    }}
+                    paginationMode={rowsApi ? 'server' : 'client'}
                     initialState={{
                         columns: {
                             ...columns,
@@ -101,18 +129,26 @@ function StorePageGrid({
                             }
                         }
                     }}
-                    {...others}
+                    onRowSelectionModelChange={(newSelectionModel) => {
+                        setSelectedRows(newSelectionModel);
+                    }}
+                    onPaginationModelChange={(model) => {
+                        setPaging(model);
+                    }}
+                    slots={{
+                        loadingOverlay: LinearProgress
+                    }}
                 />
             }
             <Snackbar
-                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
                 autoHideDuration={10000}
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                open={!!errMessage}
                 onClose={(_, reason) => {
                     if (reason === 'timeout') {
                         setErrMessage(null);
                     }
                 }}
-                open={!!errMessage}
             >
                 <Alert severity="error" variant="filled">
                     {errMessage}

@@ -34,8 +34,9 @@ function ListFilter({
     onChange,
     onDelete,
     value = {
+        type: 'list',
         operator: 'in',
-        selected: []
+        value: []
     }
 }: FilterListProps) {
     const { t } = useTranslation('nui'),
@@ -47,7 +48,7 @@ function ListFilter({
     React.useEffect(() => {
         const found: FilterListItemProps[] = [];
 
-        value.selected.forEach((s) => {
+        value.value.forEach((s) => {
             const item = list.find((l) => l.id === s);
 
             if (item) {

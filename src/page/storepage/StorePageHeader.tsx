@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {
+    FilterArgs,
     FilterListChangeEventProps,
     FilterListOperatorType,
     FilterListProps,
@@ -14,8 +15,8 @@ import {
 import StatusChip, { StatusChipProps } from '../../viz/StatusChip';
 import { Stack, Typography } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
-import { useRecoilState } from 'recoil';
-import { FilterValue } from './StorePageState';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { FilterValue, RecordCount } from './StorePageState';
 import TreeFilter from '../../data/filters/TreeFilter';
 import ToggleFilter from '../../data/filters/ToggleFilter';
 import ListFilter from '../../data/filters/ListFilter';
@@ -25,7 +26,6 @@ import StorePageFilterSelector from './StorePageFilterSelector';
 import { Button } from '../../commands';
 
 export type StorePageHeaderProps = {
-    countApi?: (args: object) => Promise<number>;
     filters?: FilterProps;
     onFilterChange?: (e: object) => void;
     status?: StatusChipProps;
@@ -34,7 +34,6 @@ export type StorePageHeaderProps = {
 };
 
 function StorePageHeader({
-    countApi,
     filters,
     onFilterChange,
     status,
@@ -56,7 +55,7 @@ function StorePageHeader({
         [searchFilter, setSearchFilter] =
             React.useState<FilterSearchProps | null>(null),
         [filterValue, setFilterValue] = useRecoilState(FilterValue),
-        [count, setCount] = React.useState<number | boolean>(false),
+        recordCount = useRecoilValue(RecordCount),
         [statusResult, setStatusResult] = React.useState<
             StatusChipProps | undefined
         >(status),
@@ -65,15 +64,13 @@ function StorePageHeader({
     React.useEffect(() => {
         const visible: (FilterListProps | FilterListProps)[] = [],
             hidden: FilterListProps[] = [],
-            filterVal: { [key: string]: unknown } = {};
+            filterVal: FilterArgs = {};
 
         filters &&
             filters.forEach((f) => {
                 switch (f.type) {
-                    case 'list':
-                        // eslint-disable-next-line no-case-declarations
+                    case 'list': {
                         const listQS = qs.get(f.param);
-                        // eslint-disable-next-line no-case-declarations
                         let listValue = f.value;
 
                         if (listQS) {
@@ -82,10 +79,9 @@ function StorePageHeader({
                                     listQSArray.shift() as FilterListOperatorType;
 
                             listValue = {
+                                type: 'list',
                                 operator: op,
-                                selected: listQSArray.map(
-                                    (s) => parseInt(s) || s
-                                )
+                                value: listQSArray.map((s) => parseInt(s) || s)
                             };
                         }
 
@@ -99,7 +95,7 @@ function StorePageHeader({
                                     ) => {
                                         const changeListQS = [
                                             e.value.operator,
-                                            ...e.value.selected
+                                            ...e.value.value
                                         ].join('|');
 
                                         qs.set(e.param, changeListQS);
@@ -123,6 +119,7 @@ function StorePageHeader({
                         }
 
                         break;
+                    }
                     case 'search':
                         setSearchFilter({
                             ...f,
@@ -142,16 +139,17 @@ function StorePageHeader({
                         });
 
                         if (f.value?.trim()) {
-                            filterVal[f.param] = f.value;
+                            filterVal[f.param] = {
+                                type: 'search',
+                                value: f.value
+                            };
                         } else {
                             delete filterVal[f.param];
                         }
 
                         break;
-                    case 'toggle':
-                        // eslint-disable-next-line no-case-declarations
+                    case 'toggle': {
                         const toggleQS = qs.get(f.param);
-                        // eslint-disable-next-line no-case-declarations
                         let toggleValue = f.value;
 
                         if (toggleQS) {
@@ -177,6 +175,7 @@ function StorePageHeader({
                         });
 
                         break;
+                    }
                     case 'tree':
                         setNavFilter({
                             ...f,
@@ -214,14 +213,6 @@ function StorePageHeader({
     }, [qs]);
 
     React.useEffect(() => {
-        if (countApi) {
-            countApi(filterValue || {}).then((result) => {
-                setCount(result);
-            });
-        }
-    }, [filterValue]);
-
-    React.useEffect(() => {
         if (statusApi) {
             statusApi(filterValue || {}).then((result) => {
                 setStatusResult(result);
@@ -235,7 +226,9 @@ function StorePageHeader({
             <Stack direction="row" spacing={2}>
                 <Typography component="h2" variant="h5">
                     {`${title} ${
-                        count === false ? '' : `(${count.toLocaleString()})`
+                        recordCount === null
+                            ? ''
+                            : `(${recordCount.toLocaleString()})`
                     }`}
                 </Typography>
                 {statusResult && <StatusChip {...statusResult} />}

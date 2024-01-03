@@ -18,7 +18,6 @@ export type StorePageProps = StorePageHeaderProps &
     };
 
 function StorePage({
-    countApi,
     filters,
     onFilterChange,
     status,
@@ -41,7 +40,6 @@ function StorePage({
         <RecoilRoot>
             <Stack spacing={2} sx={{ height: 1 }}>
                 <StorePageHeader
-                    countApi={countApi}
                     filters={filters}
                     onFilterChange={onFilterChange}
                     status={status}
