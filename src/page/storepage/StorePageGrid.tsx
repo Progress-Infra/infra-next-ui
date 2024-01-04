@@ -48,6 +48,7 @@ function StorePageGrid({
     onSortModelChange,
     rows,
     rowsApi,
+    sortModel,
     ...others
 }: StorePageGridProps) {
     const [gridRows, setGridRows] = React.useState<object[]>(rows || []),
@@ -61,6 +62,10 @@ function StorePageGrid({
         [isLoading, setIsLoading] = React.useState<boolean>(!!loading),
         [errMessage, setErrMessage] = React.useState<string | null>(null),
         apiRef = useGridApiRef();
+
+    React.useEffect(() => {
+        setSorting(sortModel || []);
+    }, [sortModel]);
 
     React.useEffect(() => {
         if (countApi && filterValue) {
