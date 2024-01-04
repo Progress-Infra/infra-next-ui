@@ -63,6 +63,8 @@ function StorePageGrid({
         [errMessage, setErrMessage] = React.useState<string | null>(null),
         apiRef = useGridApiRef();
 
+    let delay: ReturnType<typeof setTimeout>;
+
     React.useEffect(() => {
         setSorting(sortModel || []);
     }, [sortModel]);
@@ -129,6 +131,7 @@ function StorePageGrid({
                     rowCount={rowCount || 0}
                     rows={gridRows ?? []}
                     rowSelectionModel={selectedRows}
+                    sortModel={sortModel}
                     paginationMode={rowsApi ? 'server' : 'client'}
                     initialState={{
                         columns: {
@@ -139,9 +142,15 @@ function StorePageGrid({
                         }
                     }}
                     onPaginationModelChange={(model, details) => {
-                        setPaging(model);
-                        onPaginationModelChange &&
-                            onPaginationModelChange(model, details);
+                        if (delay) {
+                            clearTimeout(delay);
+                        }
+
+                        delay = setTimeout(() => {
+                            setPaging(model);
+                            onPaginationModelChange &&
+                                onPaginationModelChange(model, details);
+                        }, 500);
                     }}
                     onRowSelectionModelChange={(newSelectionModel, details) => {
                         setSelectedRows(newSelectionModel);
@@ -153,6 +162,7 @@ function StorePageGrid({
                     }}
                     onSortModelChange={(model, details) => {
                         setSorting(model);
+                        apiRef.current.setSortModel(model);
                         onSortModelChange && onSortModelChange(model, details);
                     }}
                     slots={{
