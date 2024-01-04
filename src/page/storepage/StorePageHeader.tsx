@@ -16,7 +16,7 @@ import StatusChip, { StatusChipProps } from '../../viz/StatusChip';
 import { Stack, Typography } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { FilterValue, RecordCount } from './StorePageState';
+import { FilterValue, RowCount } from './StorePageState';
 import TreeFilter from '../../data/filters/TreeFilter';
 import ToggleFilter from '../../data/filters/ToggleFilter';
 import ListFilter from '../../data/filters/ListFilter';
@@ -55,7 +55,7 @@ function StorePageHeader({
         [searchFilter, setSearchFilter] =
             React.useState<FilterSearchProps | null>(null),
         [filterValue, setFilterValue] = useRecoilState(FilterValue),
-        recordCount = useRecoilValue(RecordCount),
+        recordCount = useRecoilValue(RowCount),
         [statusResult, setStatusResult] = React.useState<
             StatusChipProps | undefined
         >(status),

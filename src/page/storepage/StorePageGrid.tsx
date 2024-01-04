@@ -2,19 +2,21 @@ import {
     DataGrid,
     DataGridProps,
     GridColDef,
-    GridPaginationModel,
     useGridApiRef
 } from '@mui/x-data-grid';
 import * as React from 'react';
-import { useRecoilState, useRecoilValue } from 'recoil';
+import { useRecoilState, useRecoilValue, useSetRecoilState } from 'recoil';
 import {
+    FetchArgs,
     FilterValue,
     GridColumnVisibility,
     GridSelection,
-    RecordCount
+    Paging,
+    RowCount,
+    Sorting
 } from './StorePageState';
 import { Alert, LinearProgress, Snackbar } from '@mui/material';
-import { FilterArgs } from '../../data/filters/common';
+import { ApiArgs, FilterArgs } from '../../data/filters/common';
 
 type omittedProps =
     | 'columns'
@@ -31,38 +33,48 @@ export type StorePageGridProps = Omit<DataGridProps, omittedProps> & {
     columns: GridColumn[];
     countApi?: (args: FilterArgs) => Promise<number>;
     rows?: object[];
-    rowsApi?: (args: object) => Promise<object[]>;
+    rowsApi?: (args: ApiArgs) => Promise<object[]>;
 };
 
 function StorePageGrid({
     autoPageSize = true,
+    columns,
     countApi,
     density = 'compact',
     hideFooterSelectedRowCount = true,
     loading,
-    columns,
+    onPaginationModelChange,
+    onRowSelectionModelChange,
+    onSortModelChange,
     rows,
     rowsApi,
     ...others
 }: StorePageGridProps) {
     const [gridRows, setGridRows] = React.useState<object[]>(rows || []),
         filterValue = useRecoilValue(FilterValue),
+        setPaging = useSetRecoilState(Paging),
+        setSorting = useSetRecoilState(Sorting),
+        fetchArgs = useRecoilValue(FetchArgs),
         columnVisibility = useRecoilValue(GridColumnVisibility),
-        [recordCount, setRecordCount] = useRecoilState(RecordCount),
+        [rowCount, setRowCount] = useRecoilState(RowCount),
         [selectedRows, setSelectedRows] = useRecoilState(GridSelection),
         [isLoading, setIsLoading] = React.useState<boolean>(!!loading),
         [errMessage, setErrMessage] = React.useState<string | null>(null),
-        [paging, setPaging] = React.useState<GridPaginationModel | null>(null),
         apiRef = useGridApiRef();
 
     React.useEffect(() => {
-        if (rowsApi && filterValue && paging) {
+        if (countApi && filterValue) {
+            countApi(filterValue).then((result) => {
+                setRowCount(result);
+            });
+        }
+    }, [filterValue]);
+
+    React.useEffect(() => {
+        if (rowsApi && fetchArgs) {
             setIsLoading(true);
 
-            rowsApi({
-                filters: filterValue,
-                paging: paging
-            })
+            rowsApi(fetchArgs)
                 .then((result) => {
                     setGridRows(result);
                     setErrMessage(null);
@@ -74,7 +86,7 @@ function StorePageGrid({
                     setIsLoading(false);
                 });
         }
-    }, [rowsApi, filterValue, paging]);
+    }, [fetchArgs]);
 
     React.useEffect(() => {
         for (const col of columns) {
@@ -91,16 +103,8 @@ function StorePageGrid({
     }, [columnVisibility]);
 
     React.useEffect(() => {
-        if (countApi) {
-            countApi(filterValue || {}).then((result) => {
-                setRecordCount(result);
-            });
-        }
-    }, [filterValue]);
-
-    React.useEffect(() => {
         if (rows && !countApi) {
-            setRecordCount(rows.length);
+            setRowCount(rows.length);
         }
     }, [rows, countApi]);
 
@@ -117,7 +121,7 @@ function StorePageGrid({
                     filterMode={rowsApi ? 'server' : 'client'}
                     hideFooterSelectedRowCount={hideFooterSelectedRowCount}
                     loading={isLoading}
-                    rowCount={recordCount || 0}
+                    rowCount={rowCount || 0}
                     rows={gridRows ?? []}
                     rowSelectionModel={selectedRows}
                     paginationMode={rowsApi ? 'server' : 'client'}
@@ -129,11 +133,22 @@ function StorePageGrid({
                             }
                         }
                     }}
-                    onRowSelectionModelChange={(newSelectionModel) => {
-                        setSelectedRows(newSelectionModel);
-                    }}
-                    onPaginationModelChange={(model) => {
+                    onPaginationModelChange={(model, details) => {
                         setPaging(model);
+                        onPaginationModelChange &&
+                            onPaginationModelChange(model, details);
+                    }}
+                    onRowSelectionModelChange={(newSelectionModel, details) => {
+                        setSelectedRows(newSelectionModel);
+                        onRowSelectionModelChange &&
+                            onRowSelectionModelChange(
+                                newSelectionModel,
+                                details
+                            );
+                    }}
+                    onSortModelChange={(model, details) => {
+                        setSorting(model);
+                        onSortModelChange && onSortModelChange(model, details);
                     }}
                     slots={{
                         loadingOverlay: LinearProgress

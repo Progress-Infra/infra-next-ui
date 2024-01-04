@@ -2,10 +2,31 @@ import {
     GridColumnVisibilityModel,
     GridRowSelectionModel
 } from '@mui/x-data-grid';
-import { atom } from 'recoil';
-import { FilterArgs } from '../../data/filters/common';
+import { atom, selector } from 'recoil';
+import {
+    ApiArgs,
+    FilterArgs,
+    PagingProps,
+    SortProps
+} from '../../data/filters/common';
 
-export const FilterValue = atom<FilterArgs | null>({
+export const FetchArgs = selector<ApiArgs | null>({
+        key: 'FetchArgs',
+        get: ({ get }) => {
+            const filters = get(FilterValue),
+                paging = get(Paging),
+                sorting = get(Sorting);
+
+            return filters && paging && sorting
+                ? {
+                      filters: filters,
+                      paging: paging,
+                      sorting: sorting
+                  }
+                : null;
+        }
+    }),
+    FilterValue = atom<FilterArgs | null>({
         key: 'FilterValue',
         default: null
     }),
@@ -17,8 +38,16 @@ export const FilterValue = atom<FilterArgs | null>({
         key: 'GridColumnVisibility',
         default: null
     }),
-    RecordCount = atom<number | null>({
-        key: "RecordCount",
+    Paging = atom<PagingProps | null>({
+        key: 'Paging',
+        default: null
+    }),
+    RowCount = atom<number | null>({
+        key: 'RowCount',
+        default: null
+    }),
+    Sorting = atom<SortProps | null>({
+        key: 'Sorting',
         default: null
     }),
     StorageKey = atom<string | null>({
