@@ -38,7 +38,9 @@ const StatusIconButton: React.FC<StatusIconButtonProps> = ({
     incidentLink
 }) => {
     const { t } = useTranslation('nui'),
-        label = statusText ? t(statusText) : t(`label.status.${statusType}`),
+        label = statusText
+            ? t(statusText)
+            : t(`label.statusType.${statusType}`),
         incidentText = t('label.openIncident'),
         showIncidentLink =
             incidentLink &&

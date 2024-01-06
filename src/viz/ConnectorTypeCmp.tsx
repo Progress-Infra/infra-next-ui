@@ -1,7 +1,6 @@
 import React from 'react';
 import { Icon, Typography } from '.';
-import IconButton from '@mui/material/IconButton';
-import { SxProps, Theme } from '@mui/material';
+import { Stack, SxProps, Theme } from '@mui/material';
 import { useTranslation } from 'react-i18next';
 
 export type ConnectorType =
@@ -10,13 +9,11 @@ export type ConnectorType =
     | 'loadmasterha'
     | 'wuginstance';
 
-export type ConnectorTypeIconButtonProps = SxProps<Theme> & {
+export type ConnectorTypeProps = SxProps<Theme> & {
     connectorType: ConnectorType;
 };
 
-const ConnectorTypeIconButton: React.FC<ConnectorTypeIconButtonProps> = ({
-    connectorType
-}) => {
+const ConnectorTypeCmp: React.FC<ConnectorTypeProps> = ({ connectorType }) => {
     const { t } = useTranslation('nui'),
         label = t(`label.connectorType.${connectorType}`);
 
@@ -39,17 +36,12 @@ const ConnectorTypeIconButton: React.FC<ConnectorTypeIconButtonProps> = ({
     }
 
     return (
-        <IconButton
-            sx={{
-                display: 'flex',
-                alignItems: 'left',
-                justifyContent: 'left'
-            }}
-        >
+        <Stack direction="row" spacing={1}>
+            {/* TODO: Replace fontsize with theme */}
             <Icon faKey={iconKey} sx={{ fontSize: 12 }} />
             <Typography sx={{ ml: 0.5, fontSize: 14 }}>{label}</Typography>
-        </IconButton>
+        </Stack>
     );
 };
 
-export default ConnectorTypeIconButton;
+export default ConnectorTypeCmp;

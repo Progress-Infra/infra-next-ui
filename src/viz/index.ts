@@ -10,10 +10,10 @@ export {
     CircularProgressProps
 } from './CircularProgress';
 export {
-    default as ConnectorTypeIconButton,
-    ConnectorTypeIconButtonProps,
+    default as ConnectorTypeCmp,
+    ConnectorTypeProps as ConnectorTypeIconButtonProps,
     ConnectorType
-} from './ConnectorTypeIconButton';
+} from './ConnectorTypeCmp';
 export { default as Divider, DividerProps } from './Divider';
 export { default as Fade, FadeProps } from './Fade';
 export { default as GlobalStyles, GlobalStylesProps } from './GlobalStyles';

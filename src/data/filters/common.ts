@@ -116,6 +116,7 @@ export type FilterArgs = {
 };
 
 export type PagingProps = GridPaginationModel;
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 export interface SortProps extends GridSortModel {}
 export interface ApiArgs {
     filters: FilterArgs;

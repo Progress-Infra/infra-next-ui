@@ -8,7 +8,7 @@ import {
 } from '@mui/x-data-grid';
 import {
     ConnectorType,
-    ConnectorTypeIconButton,
+    ConnectorTypeCmp,
     Icon,
     StatusIconButton,
     StatusType
@@ -38,7 +38,7 @@ export interface ConnectorStoreRow {
 
 export type ConnectorStorePageProps = {
     instanceType: ConnectorStoreInstanceType;
-    rows?: ConnectorStoreRow[];
+    countApi?: (args: object) => Promise<number>;
     rowsApi?: (args: object) => Promise<ConnectorStoreRow[]>;
     onActionClick?: (args: {
         actionType: ConnectorStoreActionType;
@@ -49,7 +49,7 @@ export type ConnectorStorePageProps = {
 
 function ConnectorStorePage({
     instanceType,
-    rows,
+    countApi,
     rowsApi,
     onActionClick
 }: ConnectorStorePageProps) {
@@ -60,13 +60,13 @@ function ConnectorStorePage({
             field: 'actions',
             type: 'actions',
             hideable: false,
-            width: 1,
+            flex: 0.2,
             minWidth: 1,
             maxWidth: 1,
             getActions: (params: GridRowParams<ConnectorStoreRow>) => [
                 <GridActionsCellItem
                     icon={<Icon faKey="edit" />}
-                    label="Edit"
+                    label={t('command.edit')}
                     showInMenu
                     onClick={() =>
                         onActionClick &&
@@ -79,7 +79,7 @@ function ConnectorStorePage({
                 />,
                 <GridActionsCellItem
                     icon={<Icon faKey="download" />}
-                    label="Download"
+                    label={t('command.download')}
                     showInMenu
                     onClick={() =>
                         onActionClick &&
@@ -92,7 +92,7 @@ function ConnectorStorePage({
                 />,
                 <GridActionsCellItem
                     icon={<Icon faKey="trash" />}
-                    label="Delete"
+                    label={t('command.delete')}
                     showInMenu
                     onClick={() =>
                         onActionClick &&
@@ -105,7 +105,7 @@ function ConnectorStorePage({
                 />,
                 <GridActionsCellItem
                     icon={<Icon faKey="refresh" />}
-                    label="Redeploy"
+                    label={t('command.redeploy')}
                     showInMenu
                     onClick={() =>
                         onActionClick &&
@@ -120,16 +120,15 @@ function ConnectorStorePage({
         },
         {
             field: 'id',
-            headerName: 'Id',
+            headerName: t('label.id'),
             headerAlign: 'center',
             align: 'right',
-            flex: 1,
-            minWidth: 50,
+            flex: 0.2,
             hidden: true
         },
         {
             field: 'name',
-            headerName: 'Name',
+            headerName: t('label.name'),
             headerAlign: 'left',
             align: 'left',
             flex: 1,
@@ -137,7 +136,7 @@ function ConnectorStorePage({
         },
         {
             field: 'type',
-            headerName: 'Type',
+            headerName: t('label.type'),
             headerAlign: 'left',
             align: 'left',
             flex: 1,
@@ -146,17 +145,18 @@ function ConnectorStorePage({
                 params: GridRenderCellParams<ConnectorStoreRow, string>
             ) => {
                 return (
-                    <ConnectorTypeIconButton
+                    <ConnectorTypeCmp
                         connectorType={params.value as ConnectorType}
-                    ></ConnectorTypeIconButton>
+                    />
                 );
             }
         },
         {
             field: 'status',
-            headerName: 'Status',
+            headerName: t('label.status'),
             headerAlign: 'left',
-            width: 150,
+            flex: 1,
+            maxWidth: 150,
             renderCell: (
                 params: GridRenderCellParams<ConnectorStoreRow, string>
             ) => {
@@ -170,7 +170,7 @@ function ConnectorStorePage({
         },
         {
             field: 'siteName',
-            headerName: 'Site name',
+            headerName: t('label.connectorStorePage.siteName'),
             flex: 0.5,
             minWidth: 50,
             headerAlign: 'left',
@@ -178,7 +178,7 @@ function ConnectorStorePage({
         },
         {
             field: 'connectedTo',
-            headerName: 'Connected to',
+            headerName: t('label.connectorStorePage.connectedTo'),
             flex: 1,
             minWidth: 50,
             headerAlign: 'left',
@@ -191,25 +191,18 @@ function ConnectorStorePage({
         },
         {
             field: 'ipAddress',
-            headerName: 'IP address',
+            headerName: t('label.ipAddress'),
             flex: 1,
             minWidth: 50,
-            headerAlign: 'right',
-            align: 'right'
-        },
-        {
-            field: 'spacer',
-            headerName: '',
-            width: 1,
-            headerAlign: 'right',
-            align: 'right'
+            headerAlign: 'left',
+            align: 'left'
         }
     ];
 
     const tools = [
         {
             iconKey: 'plus',
-            label: t('label.connectorStorePage.tools.add'),
+            label: t('command.add'),
             requiresRow: false,
             children: [
                 {
@@ -240,7 +233,7 @@ function ConnectorStorePage({
         },
         {
             iconKey: 'edit',
-            label: t('label.connectorStorePage.tools.edit'),
+            label: t('command.edit'),
             requiresRow: true,
             onClick: (e: GridRowId[] | undefined) => {
                 onActionClick &&
@@ -254,7 +247,7 @@ function ConnectorStorePage({
         },
         {
             iconKey: 'download',
-            label: t('label.connectorStorePage.tools.download'),
+            label: t('command.download'),
             requiresRow: true,
             onClick: (e: GridRowId[] | undefined) => {
                 onActionClick &&
@@ -268,7 +261,7 @@ function ConnectorStorePage({
         },
         {
             iconKey: 'trash',
-            label: t('label.connectorStorePage.tools.delete'),
+            label: t('command.delete'),
             requiresRow: true,
             onClick: (e: GridRowId[] | undefined) => {
                 onActionClick &&
@@ -282,7 +275,7 @@ function ConnectorStorePage({
         },
         {
             iconKey: 'refresh',
-            label: t('label.connectorStorePage.tools.redeploy'),
+            label: t('command.redeploy'),
             requiresRow: true,
             onClick: (e: GridRowId[] | undefined) => {
                 onActionClick &&
@@ -299,7 +292,7 @@ function ConnectorStorePage({
     const filters: FilterProps = [
         {
             type: 'tree',
-            label: t('label.connectorStorePage.filters.allSites'),
+            label: t('label.filter.allSites'),
             nodes: [],
             param: 'site'
         },
@@ -311,19 +304,19 @@ function ConnectorStorePage({
                     iconColor: 'success',
                     iconKey: 'circle',
                     id: 1,
-                    label: t('label.status.healthy')
+                    label: t('label.statusType.healthy')
                 },
                 {
                     iconColor: 'warning',
                     iconKey: 'circle',
                     id: 2,
-                    label: t('label.status.warning')
+                    label: t('label.statusType.warning')
                 },
                 {
                     iconColor: 'error',
                     iconKey: 'circle',
                     id: 3,
-                    label: t('label.status.critical')
+                    label: t('label.statusType.critical')
                 }
             ]
         },
@@ -350,14 +343,12 @@ function ConnectorStorePage({
 
     return (
         <StorePage
-            sx={{ width: '100%' }}
             tools={tools}
             columns={columns}
-            countApi={undefined}
             filters={filters}
+            countApi={countApi}
             rowsApi={rowsApi}
-            rows={rows}
-            title={t('label.connectorStorePage.title')}
+            title={t('title.connectorStorePage.pageTitle')}
         />
     );
 }
